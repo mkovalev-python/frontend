@@ -1,0 +1,13 @@
+.login-form{
+    width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    padding: 25px;
+    transform: translate(-50%, -50%)
+}
+
+.login-form-button {
+    width: 100%;
+}

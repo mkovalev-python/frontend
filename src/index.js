@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  BrowserRouter as Router,
+  Route
+} from "react-router-dom";
+import 'antd/dist/antd.css'
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import CheckPermissions from "./Pages/CheckPermissions";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Router>
+          <Route path="/" exact component={CheckPermissions}/>
+          <Route path="/login" exact component={LoginPage}/>
+      </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
