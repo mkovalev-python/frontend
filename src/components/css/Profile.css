@@ -1,0 +1,17 @@
+.ant-avatar{
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+.ant-layout-content{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container-info{
+    float: left;
+    padding: 0 0 0 25px;
+}
+.container-button {
+    float: right;
+}

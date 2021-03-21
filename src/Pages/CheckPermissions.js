@@ -1,26 +1,44 @@
 import {Redirect} from "react-router-dom";
+import API from "../API";
+import {useEffect, useState} from "react";
+import {Spin} from "antd";
+import AdminPage from "./AdminPage/AdminPage";
+
 
 function CheckPermissions(){
 
+    const [isLoading,setIsLoading] = useState(true)
+
+    useEffect(()=>{
+            API.get('/check/permission/', {
+        headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}
+    })
+        .then(res =>{
+            sessionStorage.setItem('permission',res.data[0].permission)
+            setIsLoading(false)
+        })
+                .catch(error=>{
+                    console.log(error)
+                })
+
+    },[])
+
+
+    console.log(sessionStorage.getItem('token'))
     if(sessionStorage.getItem('token')){
+            if(isLoading){
+                return <Spin />
+            }
+
         switch (sessionStorage.getItem('permission')){
             case 'SuperAdmin':
-                return 'Hi'
-                //return <SuperAdminPage />
             case 'Volunteer':
-                return 'Hi'
-                //return <VolunteerPage />
             case 'ServiceAdmin':
-                return 'Hi'
-                //return <ServiceAdminPage />
             case 'PollAdmin':
-                return 'Hi'
-                //return <PollAdminPage />
             case 'ParticipantAdmin':
-                return 'Hi'
-                //return <ParticipantAdminPage />
+                return <AdminPage />
             case 'Participant':
-                return 'Hi'
+                return 'Hi Participant'
                 //return <ParticipantPage />
             default: return 'Null'
         }

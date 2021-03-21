@@ -1,0 +1,17 @@
+.ant-layout-header{
+    background: #ffa300;
+
+}
+.ant-menu-horizontal{
+    background: #ffa300;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.ant-menu-item{
+    float: right;
+}
+.Logo {
+    width: 100px;
+    float: left;
+}

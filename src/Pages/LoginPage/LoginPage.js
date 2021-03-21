@@ -3,24 +3,38 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './LoginPage.css'
 import logo from './logo.svg'
 import API from "../../API";
+import {useEffect, useState} from "react";
+import {Redirect} from "react-router-dom";
 
 
 function LoginPage(){
 
+    const [value, setValue] = useState([])
+    const [error, setError] = useState('')
 
     const onFinish = (values) => {
     console.log('Received values of form: ', values);
-
-    API.post('token/obtain/', values)
-        .then(res=> {
-                console.log(res)
-            }
-        )
-        .catch(error => {
-            console.log(error)
-        })
+    setValue(values)
   };
+    useEffect(()=> {
+        console.log(value)
+            API.post('token/obtain/', value)
+                .then(res => {
+                        sessionStorage.setItem('token', res.data.token)
 
+                    }
+                )
+                .catch(error => {
+                    console.log(error.response)
+                    if(value.length!==0) {
+                        setError('Логин или пароль были введены неверно!')
+                    }
+                })
+        },)
+
+    if(sessionStorage.getItem('token')){
+        return <Redirect to="/"/>
+    }
 
 return (
 
@@ -33,6 +47,8 @@ return (
       onFinish={onFinish}
     >
         <img src={logo} alt={logo}/>
+        <h2>Авторизация</h2>
+        <h5 style={{ color: "red" }}>{error}</h5>
       <Form.Item name="username"
         rules={[
           {
@@ -65,6 +81,7 @@ return (
           Log in
         </Button>
       </Form.Item>
+        <h5>Забыли пароль? Обратитесь к администратору системы admin@mail.ru</h5>
     </Form>
 
         )

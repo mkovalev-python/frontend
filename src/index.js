@@ -9,12 +9,14 @@ import {
 import 'antd/dist/antd.css'
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import CheckPermissions from "./Pages/CheckPermissions";
+import CreateUserPage from "./Pages/AdminPage/CreateUserPage";
 
 ReactDOM.render(
   <React.StrictMode>
       <Router>
           <Route path="/" exact component={CheckPermissions}/>
           <Route path="/login" exact component={LoginPage}/>
+          <Route path="/create_user" exact component={CreateUserPage}/>
       </Router>
   </React.StrictMode>,
   document.getElementById('root')
