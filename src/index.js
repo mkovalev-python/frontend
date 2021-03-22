@@ -10,6 +10,7 @@ import 'antd/dist/antd.css'
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import CheckPermissions from "./Pages/CheckPermissions";
 import CreateUserPage from "./Pages/AdminPage/CreateUserPage";
+import DeleteUserPage from "./Pages/AdminPage/DeleteUserPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.render(
           <Route path="/" exact component={CheckPermissions}/>
           <Route path="/login" exact component={LoginPage}/>
           <Route path="/create_user" exact component={CreateUserPage}/>
+          <Route path="/list_users" exact component={DeleteUserPage}/>
       </Router>
   </React.StrictMode>,
   document.getElementById('root')

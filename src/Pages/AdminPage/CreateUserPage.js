@@ -2,7 +2,7 @@ import ProfileStaff from "../../components/ProfileStaff";
 import {Button, DatePicker, Divider, Form, Input, Select, Spin} from "antd";
 import Nav from "../../components/Nav";
 import {Content} from "antd/es/layout/layout";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {LeftOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import API from "../../API";
@@ -15,6 +15,8 @@ function CreateUserPage(){
      const [team, setTeam] = useState([])
      const [country, setCountry] = useState([])
      const [isLoading, setIsLoading] = useState(true)
+     const [created, setCreated] = useState(false)
+     const [error, setError] = useState('')
 
     function handleClick(e) {
         console.log(e)
@@ -44,20 +46,23 @@ function CreateUserPage(){
 
             API.post('post/create/user/', values)
              .then(res =>{
-                 console.log(res)
+                 setCreated(true)
              })
              .catch(error =>{
                  console.log(error.response)
+                 setError('Данный логин уже зарегистрирован')
              })
         };
 
 
+        if(created){
+            return <Redirect to="/"/>
+        }
 
 
-
-     if(isLoading){
-        return <Spin />
-     }
+        if(isLoading){
+            return <Spin />
+        }
 
     return(
         <>
@@ -70,8 +75,9 @@ function CreateUserPage(){
             </Button>
 
             <Form name="normlogin"
-      className="logiform"
+                    className="logiform"
                   style={{marginTop: 100}} onFinish={onFinish}>
+                <span style={{ color:"red" }}>{error}</span>
                 <Form.Item name="username" label="Логин" rules={[{required: true, message: 'Введите логин пользователя'}]}>
                     <Input placeholder="Логин" />
                 </Form.Item>
@@ -115,6 +121,7 @@ function CreateUserPage(){
                         ))}
                     </Select>
                 </Form.Item>
+
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">Создать</Button>
