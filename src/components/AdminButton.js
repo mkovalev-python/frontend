@@ -22,10 +22,19 @@ function AdminButton(){
             </Button>
             <Button style={{ margin: "5px", width: 240 }} onClick={() => handleClick('list_users')}>
                 Список пользователей
+            </Button><br/>
+            <Button style={{ margin: "5px", width: 240 }} type="primary" ghost onClick={() => handleClick('create_poll')}>
+                Создать опрос
             </Button>
             </>
             :null
         }
+        {sessionStorage.getItem('permission')==='PollAdmin'?
+            <>
+                <Button style={{ margin: "5px", width: 240 }} type="primary" ghost onClick={() => handleClick('create_poll')}>
+                Создать опрос
+                </Button>
+                </>:null}
     </>
     )
 }
