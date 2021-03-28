@@ -168,16 +168,13 @@ function CreatePollPage(){
 
     const history = useHistory();
 
-    const [latePosting, setLatePosting] = useState()
+    const [latePosting, setLatePosting] = useState(false)
     const [category, setCategory] = useState()
     const [questions, setQuestions] = useState()
     const [created, setCreated] = useState(false)
     const  get_questions = (e) => {
         setQuestions(e)
     }
-
-
-
 
     function handleClick(e) {
             console.log(e)
@@ -188,13 +185,13 @@ function CreatePollPage(){
         console.log(values)
         console.log(questions)
 
-        const data = {info: values, questions:questions}
+        const data = {info: {values,latePosting:latePosting}, questions:questions}
 
         console.log(data)
-
         API.post('/create/new/poll/',data)
             .then(res=>(
                 setCreated(true)
+
             ))
             .catch(error=>(
                 console.log(error.response)
@@ -209,6 +206,7 @@ function CreatePollPage(){
         setLatePosting(checked)
     }
     if(created){
+        message.success('Опрос создан!')
             return <Redirect to="/"/>
         }
 
@@ -235,6 +233,10 @@ function CreatePollPage(){
                     <TextArea maxLength={255} rows={4} placeholder='Введите описание опроса'/>
                 </Form.Item>
 
+                <Form.Item name='points' label='Количество баллов за прохождение'>
+                    <InputNumber defaultValue={0} min={0} max={100}/>
+                </Form.Item>
+
                 <Form.Item name='category' label='Категория опроса'>
                    <Select placeholder="Укажите категорию" onChange={handleChange}>
                        <Option value='participant'>Участники</Option>
@@ -244,8 +246,8 @@ function CreatePollPage(){
                 <Form.Item>
                     <ModalQuestions get_questions={get_questions} Category={category}/>
                 </Form.Item>
-                <Form.Item name='latePosting' label='Отложный постинг:'>
-                    <Switch defaultUnChecked onChange={onChange} />
+                <Form.Item label='Отложный постинг:'>
+                    <Switch defaultUnChecked  onChange={onChange} />
                 </Form.Item>
                     {latePosting?
                         <Form.Item name='datePosting'>

@@ -3,7 +3,7 @@ import ProfileStaff from "../../components/ProfileStaff";
 import {Content} from "antd/es/layout/layout";
 import {Button, Divider, message, Popconfirm, Space, Spin, Table} from "antd";
 import {LeftOutlined, QuestionCircleOutlined} from "@ant-design/icons";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import API from "../../API";
 
@@ -117,6 +117,10 @@ function DeleteUserPage(){
 
     if(isLoading){
         return <Spin/>
+    }
+
+   if(sessionStorage.getItem('permission')!=='SuperAdmin'){
+        return <Redirect to="/"/>
     }
 
     return(

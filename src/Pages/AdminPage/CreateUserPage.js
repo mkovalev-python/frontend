@@ -63,6 +63,9 @@ function CreateUserPage(){
         if(isLoading){
             return <Spin />
         }
+        if(sessionStorage.getItem('permission')!=='SuperAdmin'){
+            return <Redirect to="/"/>
+        }
 
     return(
         <>
