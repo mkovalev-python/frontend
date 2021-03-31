@@ -3,6 +3,7 @@ import API from "../API";
 import {useEffect, useState} from "react";
 import {Spin} from "antd";
 import AdminPage from "./AdminPage/AdminPage";
+import ParticipantPage from "./ParticipantPage/ParticipantPage";
 
 
 function CheckPermissions(){
@@ -38,8 +39,7 @@ function CheckPermissions(){
             case 'ParticipantAdmin':
                 return <AdminPage />
             case 'Participant':
-                return 'Hi Participant'
-                //return <ParticipantPage />
+                return <ParticipantPage />
             default: return 'Null'
         }
     }else{
