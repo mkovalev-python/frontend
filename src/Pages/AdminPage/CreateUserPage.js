@@ -14,6 +14,7 @@ function CreateUserPage(){
      const [permission, setPermission] = useState([])
      const [team, setTeam] = useState([])
      const [country, setCountry] = useState([])
+     const [session, setSession] = useState([])
      const [isLoading, setIsLoading] = useState(true)
      const [created, setCreated] = useState(false)
      const [error, setError] = useState('')
@@ -32,6 +33,7 @@ function CreateUserPage(){
                     setTeam(res.data.team)
                     setCountry(res.data.country)
                     setPermission(res.data.permission)
+                    setSession(res.data.session)
 
                 })
                 .catch(error=>{
@@ -101,6 +103,14 @@ function CreateUserPage(){
                     <Select>
                         {country.map(c=>(
                             <Select.Option value={c.country}>{c.country}</Select.Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+
+                <Form.Item label="Смена" name='session' rules={[{ required: true, message: 'Укажите Смену' }]}>
+                    <Select>
+                        {session.map(c=>(
+                            <Select.Option value={c.number_session}>{c.name_session} <b>(С {c.date_from_session} до {c.date_to_session})</b></Select.Option>
                         ))}
                     </Select>
                 </Form.Item>

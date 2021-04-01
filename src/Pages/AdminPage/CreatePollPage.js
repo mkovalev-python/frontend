@@ -12,7 +12,7 @@ import {
     Modal,
     Popconfirm,
     Select,
-    Space,
+    Space, Spin,
     Switch,
     Table
 } from "antd";
@@ -20,7 +20,7 @@ import {LeftOutlined, MinusCircleOutlined, PlusOutlined, QuestionCircleOutlined}
 import {Redirect, useHistory} from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import {Option} from "antd/es/mentions";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import API from "../../API";
 
 
@@ -172,9 +172,26 @@ function CreatePollPage(){
     const [category, setCategory] = useState()
     const [questions, setQuestions] = useState()
     const [created, setCreated] = useState(false)
+    const [session, setSession] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const  get_questions = (e) => {
         setQuestions(e)
     }
+
+    useEffect(()=>{
+            API.get('get/list/option/', {
+        headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}})
+                .then(res =>{
+                    console.log(res)
+                    setIsLoading(false)
+                    setSession(res.data.session)
+
+                })
+                .catch(error=>{
+                    console.log(error.response)
+                })
+        }, [])
+
 
     function handleClick(e) {
             console.log(e)
@@ -210,7 +227,9 @@ function CreatePollPage(){
             return <Redirect to="/"/>
         }
 
-
+    if(isLoading){
+        return <Spin />
+    }
 
 
 
@@ -242,6 +261,15 @@ function CreatePollPage(){
                        <Option value='participant'>Участники</Option>
                        <Option value='service'>Службы</Option>
                    </Select>
+                </Form.Item>
+                <Form.Item label="Смена" name='session' rules={[{ required: true, message: 'Укажите Смену' }]}>
+                    <Select>
+                        {session.map(c=>(
+                            <Select.Option value={c.number_session}>{c.name_session === 'Универсальное'?
+                                <b style={{ color:"red" }}>{c.name_session}</b>:
+                                <>{c.name_session} <b>(C {c.date_from_sessoin} до {c.date_to_session})</b></>}</Select.Option>
+                        ))}
+                    </Select>
                 </Form.Item>
                 <Form.Item>
                     <ModalQuestions get_questions={get_questions} Category={category}/>
