@@ -108,6 +108,7 @@ function ActivePolls(){
                     >
                           <Meta title={p.title} description={p.description}/>
                           <span>Количество баллов: <b>{p.points}</b> </span>
+                          <span>Смена: <b>{p.session}</b></span>
                     </Card>
                 </Col>
             ))}
