@@ -25,6 +25,7 @@ function ProfileStaff(){
             .then(res=>{
                 console.log(res.data)
                 setUserInfo(res.data)
+                sessionStorage.setItem('user_id', res.data.user[0].id)
                 setIsLoading(false)
 
             })

@@ -20,7 +20,6 @@ function CreateUserPage(){
      const [error, setError] = useState('')
 
     function handleClick(e) {
-        console.log(e)
         history.push(e);
         }
 
@@ -28,7 +27,6 @@ function CreateUserPage(){
             API.get('get/list/option/', {
         headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}})
                 .then(res =>{
-                    console.log(res)
                     setIsLoading(false)
                     setTeam(res.data.team)
                     setCountry(res.data.country)
@@ -44,8 +42,6 @@ function CreateUserPage(){
         const dateFormat = 'YYYY-MM-DD';
 
         const onFinish = (values) => {
-            console.log('Received values of form: ', values);
-
             API.post('post/create/user/', values)
              .then(res =>{
                  setCreated(true)
