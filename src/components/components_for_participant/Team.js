@@ -49,7 +49,7 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                     console.log('Validate Failed:', info);
                   });
               }}>
-            {isLoading?<Spin/>:
+            {isLoading?<h1>Вы прошли уже этот опрос</h1>:
 
                 <Form form={form}>
                     {poll.questions.map(question =>(
