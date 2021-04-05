@@ -260,6 +260,8 @@ function CreatePollPage(){
                    <Select placeholder="Укажите категорию" onChange={handleChange}>
                        <Option value='participant'>Участники</Option>
                        <Option value='service'>Службы</Option>
+                       <Option value='spiker'>Оценка спикера</Option>
+                       <Option value='other'>Для закрытой смены</Option>
                    </Select>
                 </Form.Item>
                 <Form.Item label="Смена" name='session' rules={[{ required: true, message: 'Укажите Смену' }]}>
