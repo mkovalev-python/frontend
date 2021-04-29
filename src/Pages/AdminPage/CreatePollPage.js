@@ -223,8 +223,8 @@ function CreatePollPage(){
         setLatePosting(checked)
     }
     if(created){
-        message.success('Опрос создан!')
-            return <Redirect to="/"/>
+        // message.success('Опрос создан!')
+        return <Redirect to="/"/>
         }
 
     if(isLoading){

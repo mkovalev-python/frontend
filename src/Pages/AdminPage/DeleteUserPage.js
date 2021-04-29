@@ -95,7 +95,7 @@ function DeleteUserPage(){
     key: 'permission',
   },
         {
-    title: 'Action',
+    title: 'Действия',
     key: 'action',
     render: (text, record) => (
       <Space size="middle">
@@ -107,7 +107,7 @@ function DeleteUserPage(){
             cancelText="Нет"
             icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
           >
-          <a onClick={() => handleCl(record.username)}>Delete</a>
+          <a onClick={() => handleCl(record.username)}>Удалить</a>
   </Popconfirm>
       </Space>
     ),
