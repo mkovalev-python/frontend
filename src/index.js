@@ -13,6 +13,7 @@ import CreateUserPage from "./Pages/AdminPage/CreateUserPage";
 import DeleteUserPage from "./Pages/AdminPage/DeleteUserPage";
 import CreatePollPage from "./Pages/AdminPage/CreatePollPage";
 import AnalyticsPage from "./Pages/AdminPage/AnalyticsPage";
+import CreateTestPage from "./Pages/AdminPage/CreateTestPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
           <Route path="/create_user" exact component={CreateUserPage}/>
           <Route path="/list_users" exact component={DeleteUserPage}/>
           <Route path="/create_poll" exact component={CreatePollPage}/>
+          <Route path="/create_test" exact component={CreateTestPage}/>
           <Route path="/analytics" exact component={AnalyticsPage}/>
       </Router>
   </React.StrictMode>,

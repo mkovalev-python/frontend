@@ -44,7 +44,7 @@ function AnalyticsPage(){
     { title: 'Имя', dataIndex: 'first_name', key: 'first_name' },
     { title: 'Фамилия', dataIndex: 'last_name', key: 'last_name' },
     { title: 'Команда', dataIndex: 'team', key: 'team' },
-    { title: 'Сессия', dataIndex: 'session', key: 'session' },
+    { title: 'Смена', dataIndex: 'session', key: 'session' },
     { title: 'Опрос', dataIndex: 'poll', key: 'poll' },
     { title: 'Вопрос', dataIndex: 'question', key: 'question' },
     { title: 'Ответы', dataIndex: 'answer', key: 'answer' },
@@ -66,7 +66,7 @@ function AnalyticsPage(){
         key: 'team'
       },
                 {
-        title: 'Сессия',
+        title: 'Смена',
         dataIndex: 'session',
         key: 'session'
       },

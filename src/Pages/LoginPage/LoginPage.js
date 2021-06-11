@@ -78,7 +78,7 @@ return (
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+           Войти
         </Button>
       </Form.Item>
         <h5>Забыли пароль? Обратитесь к администратору системы admin@mail.ru</h5>
