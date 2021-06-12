@@ -7,6 +7,7 @@ import {LeftOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons
 import TextArea from "antd/es/input/TextArea";
 import {useHistory} from "react-router-dom";
 import API from "../../API";
+import Text from "antd/es/typography/Text";
 
 interface Values {
   title: string;
@@ -63,12 +64,11 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
                   {...restField}
                   name={[name, 'answer']}
                   fieldKey={[fieldKey, 'answer']}
-                  label="Вариант ответа"
                   rules={[{ required: true, message: 'Missing first name' }]}
                 >
                   <Input placeholder="Вариант ответа" />
                 </Form.Item>
-                <Form.Item label="Баллы за прохождение"
+                <Form.Item
                            {...restField}
                            name={[name, 'point']}
                            fieldKey={[fieldKey, 'point']}
@@ -80,7 +80,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
             ))}
             <Form.Item>
               <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add field
+                Добавить вариант ответа
               </Button>
             </Form.Item>
           </>
@@ -96,6 +96,7 @@ const CollectionsPage = () => {
   const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
   const [session, setSession] = useState([])
+  const [listQuestions, setListQuestions] = useState([])
 
 
   useEffect(()=>{
@@ -114,19 +115,47 @@ const CollectionsPage = () => {
 
   const onCreate = (values: any) => {
     console.log('Received values of form: ', values);
+    setListQuestions([...listQuestions,values])
     setVisible(false);
   };
   const history = useHistory();
-  function handleClick(e) {
+  function handleClick(e,index) {
+      if(e==='delQuestion'){
+          console.log(index)
+          delete listQuestions[index]
+          listQuestions.length= listQuestions.length -1
+          setListQuestions([...listQuestions])
+      }
+      else{
         console.log(e)
         history.push(e);
         }
+      }
+
   const onFinish = (values: any) => {
-        console.log(values)}
+        console.log('1:',values)
+        console.log('2:',listQuestions)
+
+        API.post('post/test/', {values,listQuestions})
+                .then(res =>{
+                    console.log(res)
+                                    })
+                .catch(error=>{
+                    console.log(error.response)
+                })
+  }
 
   if(isLoading){
         return <Spin />
   }
+  const listItems = listQuestions.map((listQuestions, index) => <li key={index}>
+      <Text keyboard><Text strong>Вопрос: </Text>{listQuestions.question}<Button onClick={() => handleClick('delQuestion', index)} type='link' danger size="small" >Удалить</Button></Text>
+      <ul>
+          {listQuestions.answers.map((listQuestions) => <li>
+              <Text keyboard><Text strong>Ответ: </Text>{listQuestions.answer} <Text strong>Балл:{listQuestions.point} </Text></Text></li>)}
+      </ul>
+      </li>)
+
 
   return (
     <>
@@ -162,7 +191,16 @@ const CollectionsPage = () => {
                                 ))}
                             </Select>
                         </Form.Item>
+                        <Form.Item label="Номер компетенции" name="numComp" rules={[{ required: true, message: 'Укажите номер компетенции!!' }]}>
+                            <Select>
+                                <Select.Option value="1">Компетенция 1</Select.Option>
+                                <Select.Option value="2">Компетенция 2</Select.Option>
+                                <Select.Option value="3">Компетенция 3</Select.Option>
+                                <Select.Option value="4">Компетенция 4</Select.Option>
+                            </Select>
+                        </Form.Item>
                         <Divider>Вопросы</Divider>
+                        {listQuestions!==[]?<ul>{listItems}</ul>:<span>Список вопросов пуст!</span>}
                         <Button type="primary" style={{ width: '100%', marginBottom: '5px' }} onClick={() => {setVisible(true);}}>Добавить вопрос и ответы</Button>
                         <CollectionCreateForm visible={visible} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
 
