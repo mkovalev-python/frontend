@@ -58,13 +58,15 @@ function ActivePolls(){
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [params, setParams] = useState([])
 
-    function onClick(id,type){
-        setParams({id:id, type:type})
+    function onClick(id,type, comp){
+        setParams({id:id, type:type, comp: comp})
         if(type==='view'){
         setIsModalVisible(true)}
         else {
-            API.post('/move/polls/', {id:id, type:type})
-                .then(res=>{})
+            API.post('/move/polls/', {id:id, type:type, comp: comp})
+                .then(res=>{
+                    window.location.reload()
+                })
                 .catch(error=>{})
         }
 
@@ -76,6 +78,7 @@ function ActivePolls(){
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}
         })
             .then(res=>{
+                console.log(res.data)
                 setPolls(res.data)
                 setIsLoading(false)
             })
@@ -101,9 +104,9 @@ function ActivePolls(){
                               />
                             }
                             actions={[
-                                <Button type="primary" ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
-                                <Button onClick={() => onClick(p.id, 'archive')}>В архив</Button>,
-                                <Button danger onClick={() => onClick(p.id, 'delete')}>Удалить</Button>
+                                <Button type="primary" ghost disabled onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                <Button onClick={() => onClick(p.id, 'archive', p.num_comp)}>В архив</Button>,
+                                <Button danger onClick={() => onClick(p.id, 'delete', p.num_comp)}>Удалить</Button>
                             ]}
                     >
                           <Meta title={p.title} description={p.description}/>

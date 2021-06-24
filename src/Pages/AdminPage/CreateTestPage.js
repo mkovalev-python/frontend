@@ -8,7 +8,7 @@ import TextArea from "antd/es/input/TextArea";
 import {useHistory} from "react-router-dom";
 import API from "../../API";
 import Text from "antd/es/typography/Text";
-
+import { message } from 'antd';
 interface Values {
   title: string;
   description: string;
@@ -133,15 +133,14 @@ const CollectionsPage = () => {
       }
 
   const onFinish = (values: any) => {
-        console.log('1:',values)
-        console.log('2:',listQuestions)
-
         API.post('post/test/', {values,listQuestions})
                 .then(res =>{
-                    console.log(res)
-                                    })
+                    history.push('/');
+                    message.success('Тест создан');
+                })
                 .catch(error=>{
                     console.log(error.response)
+                    message.error('Тест НЕ создан!');
                 })
   }
 
