@@ -160,6 +160,30 @@ function Polls() {
                             ))}
                         </Row>
                     </Panel>}
+                {polls['test']===null?null:
+                    <Panel header= "Тест" key="3">
+                        <Row gutter={[26, 8]}>
+                            {polls['test'].map(p=>(
+                                <Col>
+                                  <Card style={{ width: 300 }}
+                                        cover={
+                                          <img
+                                            alt="example"
+                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                          />
+                                        }
+                                        actions={[
+                                            <Button type="primary" ghost onClick={() => onClick(p.id, 'test')}>Пройти опрос</Button>,
+                                        ]}
+                                >
+                                          <Meta title={p.title} description={p.description}/>
+                                          <span>Количество баллов: <b>{p.points}</b> </span>
+                                    </Card>
+                                </Col>
+
+                            ))}
+                        </Row>
+                    </Panel>}
             </Collapse>
             {isModalVisible?<ModalPoll visible={isModalVisible}
                                        onCreate={onCreate}
