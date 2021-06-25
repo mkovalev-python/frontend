@@ -42,7 +42,8 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
 
                     const data={'answers': values,
                                 'id_poll':poll.poll_info.id,
-                                'user_id':sessionStorage.getItem('user_id')}
+                                'user_id':sessionStorage.getItem('user_id'),
+                                'type':poll.type}
                     onCreate(data);
                   })
                   .catch((info) => {

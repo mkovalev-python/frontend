@@ -53,8 +53,8 @@ function ProfileStaff(){
         {sessionStorage.getItem('permission')==='Participant'?
             <>
             <div className="container-rate" style={{float:"right"}}>
-                {userInfo.rating[0].points > userInfo.rating_team.points? <Statistic title="Баллы команды" value={userInfo.rating_team.points} prefix={<RiseOutlined style={{ color: 'green'}}/>} style={{ float:'left', margin: 25}} />:
-                <Statistic title="Баллы команды" value={userInfo.rating_team.points} prefix={<RiseOutlined style={{ color: 'red', transform: 'rotate(180deg)'}}/>} style={{ float:'left', margin: 25}} />}
+                {userInfo.rating[0].points > userInfo.rating_team.points? <Statistic title="Баллы" value={userInfo.rating_team.points} prefix={<RiseOutlined style={{ color: 'green'}}/>} style={{ float:'left', margin: 25}} />:
+                <Statistic title="Баллы" value={userInfo.rating_team.points} prefix={<RiseOutlined style={{ color: 'red', transform: 'rotate(180deg)'}}/>} style={{ float:'left', margin: 25}} />}
 
 
             </div>

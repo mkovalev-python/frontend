@@ -7,6 +7,7 @@ import API from "../../API";
 import {CaretUpOutlined, FileExcelTwoTone} from "@ant-design/icons";
 import { Tabs } from 'antd';
 import {Typography } from 'antd';
+import TestTable from "./TestTable";
 const { TabPane } = Tabs;
 
 
@@ -196,6 +197,7 @@ function AnalyticsPage(){
             <ProfileStaff/>
             <Content>
                 <Divider>Аналитика</Divider>
+                <TestTable />
                 <div style={{textAlign:'center'}}>
                     <h3>Логгер баллов
                         <Tooltip title="Выгрузить в Excel">
@@ -269,8 +271,46 @@ function AnalyticsPage(){
                                             </Space>}
                         {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
                     </TabPane>
-
-
+                    <TabPane tab="Команда 2" key="2">
+                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
+                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
+                                            </Space>}
+                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
+                    </TabPane>
+                    <TabPane tab="Команда 3" key="3">
+                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
+                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
+                                            </Space>}
+                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
+                    </TabPane>
+                    <TabPane tab="Команда 4" key="4">
+                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
+                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
+                                            </Space>}
+                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
+                    </TabPane>
+                    <TabPane tab="Команда 5" key="5">
+                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
+                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
+                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
+                                            </Space>}
+                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
+                    </TabPane>
 
                 </Tabs>
 
