@@ -1,21 +1,43 @@
-import {Button, Form, Select, Table} from 'antd';
+import {Button, Form, Select, Table, Tag, Tooltip} from 'antd';
 import {Option} from "antd/es/mentions";
 import API from "../../API";
+import {useState} from "react";
+import {FileExcelTwoTone} from "@ant-design/icons";
 
 const { Column, ColumnGroup } = Table;
 function TestTable(){
+    const [params, setParams] = useState('')
     const onFinish = (values: any) => {
+        console.log(values)
     API.get('/get/tests/', {
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
-            params: {session: values.session, team: values.team}
+            params: {session: values.session, team: values.team, type: values.button}
         })
             .then(req=>{
                 console.log(req)
+                setParams(req.data)
             })
             .catch(error=>{
                 console.log(error.request)
             })
   };
+
+    function handleClick(analytics) {
+        console.log(analytics)
+        API.get('/get/excel/', {
+            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
+            params: {type: analytics}
+        })
+            .then(req=>{
+                console.log(req)
+                const link = document.createElement('a');
+                link.href = req.data['url'];
+                link.click();
+            })
+            .catch(error=>{
+                console.log(error.request)
+            })
+    }
 
     return(
         <>
@@ -41,33 +63,137 @@ function TestTable(){
                     <Option value="5">Команда 5</Option>
                 </Select>
                     </Form.Item>
-                    <Form.Item>
-                        <Button style={{marginLeft: '2%'}} htmlType="submit" type="primary">Применить</Button>
+                    <Form.Item style={{marginLeft: '2%', float: 'left'}} >
+                        <Button htmlType="submit" type="primary">Применить</Button>
                     </Form.Item>
+                    <Tooltip title="Выгрузить в Excel">
+                                  <Button style={{marginLeft:'20px'}}
+                                          type="dashed"
+                                          shape="circle"
+                                          icon={<FileExcelTwoTone />}
+                                          onClick={() => handleClick('excel_test')}/>
+                            </Tooltip>
                 </Form>
+
             </div>
-            <span>*Для получения данных выберите параметры фильтра и нажмите "Применить" </span>
-        <Table style={{marginTop: '2%'}} bordered>
+
+        <Table dataSource={params} style={{marginTop: '2%'}} bordered>
             <Column title="ФИО" dataIndex="fio" key="fio" />
             <ColumnGroup title="День 1">
-              <Column title="До" dataIndex="to1" key="to1" />
-              <Column title="После" dataIndex="after1" key="after1" />
-              <Column title="Разница" dataIndex="difference1" key="difference1" />
+              <Column
+                  title="До"
+                  dataIndex="to1"
+                  key="to1"
+                  render={tags => (
+                    <>
+                        <span style={{color:'blue'}}>{tags}</span>
+                    </>
+                  )}
+              />
+              <Column
+                  title="После"
+                  dataIndex="after1"
+                  key="after1"
+                  render={tags => (
+                        <>
+                            <span style={{color:'green'}}>{tags}</span>
+                        </>
+                  )}/>
+              <Column title="Разница"
+                      dataIndex="difference1"
+                      key="difference1"
+                      render={tags => (
+                        <>
+                            <span style={{color:'red'}}>{tags}</span>
+                        </>
+                      )}/>
             </ColumnGroup>
             <ColumnGroup title="День 2">
-              <Column title="До" dataIndex="to2" key="to2" />
-              <Column title="После" dataIndex="after2" key="after2" />
-              <Column title="Разница" dataIndex="difference2" key="difference2" />
+                            <Column
+                  title="До"
+                  dataIndex="to2"
+                  key="to2"
+                  render={tags => (
+                    <>
+                        <span style={{color:'blue'}}>{tags}</span>
+                    </>
+                  )}
+              />
+              <Column
+                  title="После"
+                  dataIndex="after2"
+                  key="after2"
+                  render={tags => (
+                        <>
+                            <span style={{color:'green'}}>{tags}</span>
+                        </>
+                  )}/>
+              <Column title="Разница"
+                      dataIndex="difference2"
+                      key="difference2"
+                      render={tags => (
+                        <>
+                            <span style={{color:'red'}}>{tags}</span>
+                        </>
+                      )}/>
             </ColumnGroup>
             <ColumnGroup title="День 3">
-              <Column title="До" dataIndex="to3" key="to3" />
-              <Column title="После" dataIndex="after3" key="after3" />
-              <Column title="Разница" dataIndex="difference3" key="difference3" />
+                            <Column
+                  title="До"
+                  dataIndex="to3"
+                  key="to3"
+                  render={tags => (
+                    <>
+                        <span style={{color:'blue'}}>{tags}</span>
+                    </>
+                  )}
+              />
+              <Column
+                  title="После"
+                  dataIndex="after3"
+                  key="after3"
+                  render={tags => (
+                        <>
+                            <span style={{color:'green'}}>{tags}</span>
+                        </>
+                  )}/>
+              <Column title="Разница"
+                      dataIndex="difference3"
+                      key="difference3"
+                      render={tags => (
+                        <>
+                            <span style={{color:'red'}}>{tags}</span>
+                        </>
+                      )}/>
             </ColumnGroup>
             <ColumnGroup title="День 4">
-              <Column title="До" dataIndex="to4" key="to4" />
-              <Column title="После" dataIndex="after4" key="after4" />
-              <Column title="Разница" dataIndex="difference4" key="difference4" />
+                            <Column
+                  title="До"
+                  dataIndex="to4"
+                  key="to4"
+                  render={tags => (
+                    <>
+                        <span style={{color:'blue'}}>{tags}</span>
+                    </>
+                  )}
+              />
+              <Column
+                  title="После"
+                  dataIndex="after4"
+                  key="after4"
+                  render={tags => (
+                        <>
+                            <span style={{color:'green'}}>{tags}</span>
+                        </>
+                  )}/>
+              <Column title="Разница"
+                      dataIndex="difference4"
+                      key="difference4"
+                      render={tags => (
+                        <>
+                            <span style={{color:'red'}}>{tags}</span>
+                        </>
+                      )}/>
             </ColumnGroup>
         </Table>
         </>
