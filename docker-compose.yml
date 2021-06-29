@@ -18,13 +18,15 @@ services:
     image: postgres
     restart: always
     ports:
-    - 5431:5431
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=Sven1998
       - POSTGRES_USER=localuser
       - POSTGRES_DB=tc_database
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
     - pg_project:/var/lib/postgresql/data
+
 
   server:
     build:
