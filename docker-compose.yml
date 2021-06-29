@@ -1,12 +1,41 @@
-
 version: "3.3"
+
+volumes:
+  pg_project:
+
 services:
 
   react-prod:
+    restart: always
     container_name: react-prod
     build:
       context: .
       dockerfile:
         Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
+  pg_db:
+    image: postgres
+    restart: always
+    ports:
+    - 5431:5431
+    environment:
+      - POSTGRES_PASSWORD=Sven1998
+      - POSTGRES_USER=localuser
+      - POSTGRES_DB=tc_database
+    volumes:
+    - pg_project:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ../backend/
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    env_file:
+      - ../backend/backend/.env
+    depends_on:
+      - pg_db
+      - react-prod
+
+
