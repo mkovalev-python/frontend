@@ -53,7 +53,6 @@ services:
     - ../backend/static:/usr/src/app/static
     - ../backend/media:/usr/src/app/media
     - ../backend/logs:/usr/src/app/logs
-    - ../backend/nginx:etc/nginx/conf.d
     depends_on:
       - server
       - pg_db
