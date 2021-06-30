@@ -15,6 +15,7 @@ services:
     ports:
       - "80:80"
   pg_db:
+    container_name: pg_db
     image: postgres
     restart: always
     ports:
@@ -26,9 +27,9 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
     - pg_project:/var/lib/postgresql/data
-
-
   server:
+    restart: always
+    container_name: server
     build:
       context: ../backend/
       dockerfile: Dockerfile
@@ -39,5 +40,24 @@ services:
     depends_on:
       - pg_db
       - react-prod
+
+  nginx:
+    container_name: server_nginx
+    restart: always
+    image: nginx
+    expose:
+      - 8000
+    ports:
+    - 8000:8000
+    volumes:
+    - ../backend/static:/usr/src/app/static
+    - ../backend/media:/usr/src/app/media
+    - ../backend/logs:/usr/src/app/logs
+    - ../backend/nginx:etc/nginx/conf.d
+    depends_on:
+      - server
+      - pg_db
+      - react-prod
+
 
 
