@@ -41,22 +41,6 @@ services:
       - pg_db
       - react-prod
 
-  nginx:
-    container_name: server_nginx
-    restart: always
-    image: nginx
-    expose:
-      - 8000
-    ports:
-    - 8000:8000
-    volumes:
-    - ../backend/static:/usr/src/app/static
-    - ../backend/media:/usr/src/app/media
-    - ../backend/logs:/usr/src/app/logs
-    depends_on:
-      - server
-      - pg_db
-      - react-prod
 
 
 
