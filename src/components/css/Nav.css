@@ -3,15 +3,16 @@
 
 }
 .ant-menu-horizontal{
-    background: #ffa300;
-    width: 50%;
-    margin-right: auto;
-    margin-left: auto;
+    background-image: url("back.jpg");
+    background-size: 90%;
+    width: 108%;
+    /*margin-right: auto;*/
+    margin-left: -4%;
 }
 .ant-menu-item{
     float: right;
 }
 .Logo {
-    width: 100px;
+    width: 60px;
     float: left;
 }

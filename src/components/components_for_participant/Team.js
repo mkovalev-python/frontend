@@ -3,6 +3,7 @@ import {useEffect, useState} from "react"
 import API from "../../API";
 import Title from "antd/es/typography/Title";
 
+import avatar from '../css/avatar.jpg'
 
 const ModalPoll = ({visible,params, onCancel, onCreate}) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -111,9 +112,9 @@ function Team(){
             {team.length === 0?<Empty />:
                 team.map(t=>(
                 <Col order={4} style={{ width: 180, margin: 20, padding: 10, border: '1px solid lightgray' }}>
-                        <Avatar shape="square" src = {t.avatar} size ={ 160 }/>
+                        <Avatar shape="square" src = {avatar} size ={ 160 }/>
                   <Title level={5} style={{ marginTop: 20, textAlign: 'center' }}>{t.first_name} {t.last_name}</Title>
-                  <Button type="primary" ghost onClick={() => onClick(t.id)}>Оценить</Button>
+                  <Button style={{width: '100%'}} type="primary" ghost onClick={() => onClick(t.id)}>Оценить</Button>
                 </Col>
                 ))
                }

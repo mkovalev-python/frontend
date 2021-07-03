@@ -1,12 +1,16 @@
-import {Button, Form, Select, Table, Tag, Tooltip} from 'antd';
+import {Button, Card, Form, Select, Space, Table, Tag, Tooltip} from 'antd';
 import {Option} from "antd/es/mentions";
 import API from "../../API";
-import {useState} from "react";
-import {FileExcelTwoTone} from "@ant-design/icons";
+import React, {useState} from "react";
+
+
 
 const { Column, ColumnGroup } = Table;
 function TestTable(){
     const [params, setParams] = useState('')
+    const [isUsers, setIsUsers] = useState()
+    const [isTeam, setIsTeam] = useState()
+    const [isLink, setIsLink] = useState('')
     const onFinish = (values: any) => {
         console.log(values)
     API.get('/get/tests/', {
@@ -14,33 +18,18 @@ function TestTable(){
             params: {session: values.session, team: values.team, type: values.button}
         })
             .then(req=>{
-                console.log(req)
-                setParams(req.data)
+                setParams(req.data.test)
+                setIsUsers(req.data.users)
+                setIsTeam(req.data.team)
+                setIsLink(req.data.link)
             })
             .catch(error=>{
                 console.log(error.request)
             })
   };
 
-    function handleClick(analytics) {
-        console.log(analytics)
-        API.get('/get/excel/', {
-            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
-            params: {type: analytics}
-        })
-            .then(req=>{
-                console.log(req)
-                const link = document.createElement('a');
-                link.href = req.data['url'];
-                link.click();
-            })
-            .catch(error=>{
-                console.log(error.request)
-            })
-    }
-
     return(
-        <>
+        <div style={{marginLeft:'5%', marginRight: '5%'}}>
         <h3 style={{textAlign:'center'}}>Аналитика тестов</h3>
         <h4 style={{float: 'left', marginRight: '2%', marginTop: '0.3%'}}>Фильтр:</h4>
             <div style={{marginLeft:'20px'}}>
@@ -66,13 +55,7 @@ function TestTable(){
                     <Form.Item style={{marginLeft: '2%', float: 'left'}} >
                         <Button htmlType="submit" type="primary">Применить</Button>
                     </Form.Item>
-                    <Tooltip title="Выгрузить в Excel">
-                                  <Button style={{marginLeft:'20px'}}
-                                          type="dashed"
-                                          shape="circle"
-                                          icon={<FileExcelTwoTone />}
-                                          onClick={() => handleClick('excel_test')}/>
-                            </Tooltip>
+                        <Button type="link" href={isLink}>Скачать отчет</Button>
                 </Form>
 
             </div>
@@ -196,7 +179,23 @@ function TestTable(){
                       )}/>
             </ColumnGroup>
         </Table>
-        </>
+
+        <h3 style={{marginLeft:'20px'}}>Рейтинг участников</h3>
+                      <Table dataSource={isUsers} style={{margin:'20px'}} bordered>
+                            <Column width='5%' title="№п/п" dataIndex="num" key="num" />
+                            <Column width='30%' title="ФИО" dataIndex="fio" key="fio" />
+                            <Column width='10%' title="Баллы" dataIndex="points" key="points" />
+                            <Column width='15%' title="Команда" dataIndex="team" key="team" />
+                            <Column width='5%' title="Смена" dataIndex="session" key="session" />
+                      </Table>
+        <h3 style={{marginLeft:'20px'}}>Рейтинг команд в смене</h3>
+                          <Table dataSource={isTeam} style={{margin:'20px'}} bordered>
+                                <Column width='5%' title="№п/п" dataIndex="num" key="num" />
+                                <Column title="Команда" dataIndex="team" key="team" />
+                                <Column title="Смена" dataIndex="session" key="session" />
+                                <Column width='15%' title="Баллы" dataIndex="points" key="points" />
+                          </Table>
+        </div>
     )
 }
 export default TestTable

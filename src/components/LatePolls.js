@@ -4,6 +4,7 @@ import {Button, Card, Col, Divider, Modal, Row, Select, Spin} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Meta from "antd/es/card/Meta";
 import {Option} from "antd/es/mentions";
+import zagl from "./css/zagl.jpg";
 
 
 const ModalPoll = ({visible,params, onCancel}) => {
@@ -33,7 +34,7 @@ const ModalPoll = ({visible,params, onCancel}) => {
             onCancel={onCancel}>
             {isLoading?<Spin/>:
                 <>
-                    <img style={{ width: '100%' }} alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"/>
+                    <img style={{ width: '100%' }} alt="example" src={zagl}/>
                     <Meta description={poll.poll_info[0].description}/>
                     <Divider>Вопросы</Divider>
                     {poll.questions.map(question =>(
@@ -99,7 +100,7 @@ function LatePolls(){
                             cover={
                               <img
                                 alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                src={zagl}
                               />
                             }
                             actions={[

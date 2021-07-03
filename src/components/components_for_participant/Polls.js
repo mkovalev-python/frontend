@@ -2,6 +2,7 @@ import {Button, Card, Col, Collapse, Divider, Form, Modal, Row, Select, Spin} fr
 import {useEffect, useState} from "react";
 import API from "../../API";
 import Meta from "antd/es/card/Meta";
+import zagl from "../css/zagl.jpg";
 const { Panel } = Collapse;
 
 
@@ -122,7 +123,7 @@ function Polls() {
                                           cover={
                                               <img
                                                   alt="example"
-                                                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                                  src={zagl}
                                               />
                                           }
                                           actions={[
@@ -146,7 +147,7 @@ function Polls() {
                                         cover={
                                           <img
                                             alt="example"
-                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                            src={zagl}
                                           />
                                         }
                                         actions={[
@@ -170,7 +171,7 @@ function Polls() {
                                         cover={
                                           <img
                                             alt="example"
-                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                            src={zagl}
                                           />
                                         }
                                         actions={[

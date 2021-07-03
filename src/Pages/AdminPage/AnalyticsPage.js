@@ -1,321 +1,99 @@
-import {Button, Divider, Space, Spin, Table, Tooltip} from "antd";
+import {Button, Card, Divider, Form, Select, Space, Spin, Table} from "antd";
 import Nav from "../../components/Nav";
 import ProfileStaff from "../../components/ProfileStaff";
-import {Content} from "antd/es/layout/layout";
 import React, {useEffect, useState} from "react";
+import {Content} from "antd/es/layout/layout";
+import {Option} from "antd/es/mentions";
+import { Row, Col } from 'antd';
 import API from "../../API";
-import {CaretUpOutlined, FileExcelTwoTone} from "@ant-design/icons";
-import { Tabs } from 'antd';
-import {Typography } from 'antd';
+import {CaretUpOutlined} from "@ant-design/icons";
 import TestTable from "./TestTable";
-const { TabPane } = Tabs;
+const { Column } = Table;
 
 
 function AnalyticsPage(){
+    const onFinish = (values: any) => {
+        console.log(values)}
 
-    const columns_logger = [
-      {
-        title: 'Участник',
-        dataIndex: 'name',
-        key: 'name'
-      },
-      {
-        title: 'Баллы',
-        dataIndex: 'points',
-        key: 'points',
-        render: (text, record) => (
-              <Space size="middle">
-                <span style={{color:'green'}}>{record.points} <CaretUpOutlined style={{ color: 'green' }} /></span>
-              </Space>
-    ),
-      },
-      {
-        title: 'Дата',
-        dataIndex: 'date',
-        key: 'date'
-      },
-        {
-        title: 'Опрос',
-        dataIndex: 'poll',
-        key: 'poll'
-      },
+    const [isLoading, setIsLoading] = useState(true)
 
-    ]
-    const columns_Answers = [
-    { title: 'Имя', dataIndex: 'first_name', key: 'first_name' },
-    { title: 'Фамилия', dataIndex: 'last_name', key: 'last_name' },
-    { title: 'Команда', dataIndex: 'team', key: 'team' },
-    { title: 'Смена', dataIndex: 'session', key: 'session' },
-    { title: 'Опрос', dataIndex: 'poll', key: 'poll' },
-    { title: 'Вопрос', dataIndex: 'question', key: 'question' },
-    { title: 'Ответы', dataIndex: 'answer', key: 'answer' },
-    ];
-    const columns_rating = [
-      {
-        title: '#',
-        dataIndex: 'rating',
-        key: 'rating'
-      },
-      {
-        title: 'Участник',
-        dataIndex: 'user',
-        key: 'user'
-      },
-        {
-        title: 'Команда',
-        dataIndex: 'team',
-        key: 'team'
-      },
-                {
-        title: 'Смена',
-        dataIndex: 'session',
-        key: 'session'
-      },
-     {
-        title: 'Баллов',
-        dataIndex: 'points',
-        key: 'points'
-      },]
-
-    const columns_rating_team = [
-      {
-        title: '#',
-        dataIndex: 'rating',
-        key: 'rating'
-      },
-      {
-        title: 'Участник',
-        dataIndex: 'user',
-        key: 'user'
-      },
-     {
-        title: 'Баллов',
-        dataIndex: 'points',
-        key: 'points'
-      },]
-
-    const columns_rating_ = [
-      {
-        title: '#',
-        dataIndex: 'rating',
-        key: 'rating'
-      },
-      {
-        title: 'Участник',
-        dataIndex: 'user',
-        key: 'user'
-      },
-        {
-        title: 'Команда',
-        dataIndex: 'team',
-        key: 'team'
-      },
-     {
-        title: 'Баллов',
-        dataIndex: 'points',
-        key: 'points'
-      },]
-
-    const [ratingTable, setRatingTable] = useState([])
-    const [loggerTable, setLoggerTable] = useState([])
-    const [userTable, setUserTable] = useState([])
+    const [isLogData, setIsLogData] = useState()
+    const [isUserData, setIsUserData] = useState()
+    const [isTeamData, setIsTeamData] = useState()
 
 
+    /* Запрос на общие таблицы */
     useEffect(()=>{
         API.get('/get/analytics/', {
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}
         })
             .then(req=>{
-                setRatingTable(req.data.rating)
-                setLoggerTable(req.data.logger)
-                setUserTable(req.data.user)
                 console.log(req.data)
+                setIsLogData(req.data.logger)
+                setIsUserData(req.data.rating_user)
+                setIsTeamData(req.data.rating_team)
+                setIsLoading(false)
             })
             .catch(error=>{
                 console.log(error.request)
             })
     },[])
 
-    function handleClick(analytics) {
-        console.log(analytics)
-        API.get('/get/excel/', {
-            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
-            params: {type: analytics}
-        })
-            .then(req=>{
-                console.log(req)
-                const link = document.createElement('a');
-                link.href = req.data['url'];
-                link.click();
-            })
-            .catch(error=>{
-                console.log(error.request)
-            })
+    if (isLoading){
+        return (<>
+                <Nav />
+                <ProfileStaff/>
+                <Content style={{width: '100%'}}>
+                    <Divider>Аналитика</Divider>
+                    <Spin style={{ marginLeft: '50%', marginTop: '5%'}} />
+                </Content>
+                </>)
     }
-
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      },
-
-    };
-    const [ratingTable_, setRatingTable_] = useState([])
-    const [ratingTableTeam_, setRatingTableTeam_] = useState([])
-    const [Team_, setTeam_] = useState([])
-    const [loading_, setLoading_] = useState(true)
-    const [loading, setLoading] = useState(true)
-    function callback(key) {
-
-    API.get('/get/table_rating/', {
-            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
-            params: {session:key}
-        })
-        .then(req=>{
-            setLoading_(false)
-            setRatingTable_(req.data.rating)
-        })
-        .catch()
-}
-    function callback_team(key) {
-        setTeam_(key)
-    }
-    function callback_team_session(key_session, key_team) {
-        API.get('/get/table_rating_team/', {
-            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
-            params: {session:key_session,team: key_team}
-        })
-        .then(req=>{
-            setLoading(false)
-            setRatingTableTeam_(req.data.rating)
-        })
-        .catch()
-    }
-
     return(
         <>
             <Nav />
             <ProfileStaff/>
-            <Content>
+            <Content style={{width: '100%'}}>
                 <Divider>Аналитика</Divider>
-                <TestTable />
-                <div style={{textAlign:'center'}}>
-                    <h3>Логгер баллов
-                        <Tooltip title="Выгрузить в Excel">
-                          <Button style={{marginLeft:'20px'}}
-                                  type="dashed"
-                                  shape="circle"
-                                  icon={<FileExcelTwoTone />}
-                                  onClick={() => handleClick('excel_log')}/>
-                        </Tooltip>
-                    </h3>
-
-                    <Table dataSource={loggerTable} columns={columns_logger} />
-
-                </div>
-
-                <div style={{ textAlign:'center'}}>
-                        <h3>Таблица рейтинга по сменам
-                            <Tooltip title="Выгрузить в Excel">
-                                  <Button style={{marginLeft:'20px'}}
-                                          type="dashed"
-                                          shape="circle"
-                                          icon={<FileExcelTwoTone />}
-                                          onClick={() => handleClick('excel_rating')}/>
-                            </Tooltip>
-                        </h3></div>
-                <Tabs defaultActiveKey="0" onChange={callback}>
-                    <TabPane tab="Общий" key="0">
-                    <Table dataSource={ratingTable} columns={columns_rating} />
-
-                    </TabPane>
-                    <TabPane tab="Смена 1" key="1">
-                        {loading_?<Spin />:<>
-                    <Table dataSource={ratingTable_} columns={columns_rating_} /></>}
-                    </TabPane>
-                    <TabPane tab="Смена 2" key="2">
-                      {loading_?<Spin />:<>
-
-                    <Table dataSource={ratingTable_} columns={columns_rating_} /></>}
-                    </TabPane>
-                    <TabPane tab="Смена 3" key="3">
-                      {loading_?<Spin />:<>
-                    <Table dataSource={ratingTable_} columns={columns_rating_} /></>}
-                    </TabPane>
-                    <TabPane tab="Смена 4" key="4">
-                      {loading_?<Spin />:<>
-                    <Table dataSource={ratingTable_} columns={columns_rating_} /></>}
-                    </TabPane>
-                    <TabPane tab="Смена 5" key="5">
-                      {loading_?<Spin />:<>
-                    <Table dataSource={ratingTable_} columns={columns_rating_} /></>}
-                    </TabPane>
-
-                </Tabs>
-
-                <div style={{ textAlign:'center'}}>
-                        <h3>Таблица рейтинга по командам
-
-                        </h3></div>
-                <Tabs defaultActiveKey="0" onChange={callback_team}>
-                    <TabPane tab="Общий" key="0">
-                    <Table dataSource={ratingTable} columns={columns_rating} />
-
-                    </TabPane>
-                    <TabPane tab="Команда 1" key="1">
-                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
-                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
-                                            </Space>}
-                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
-                    </TabPane>
-                    <TabPane tab="Команда 2" key="2">
-                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
-                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
-                                            </Space>}
-                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
-                    </TabPane>
-                    <TabPane tab="Команда 3" key="3">
-                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
-                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
-                                            </Space>}
-                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
-                    </TabPane>
-                    <TabPane tab="Команда 4" key="4">
-                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
-                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
-                                            </Space>}
-                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
-                    </TabPane>
-                    <TabPane tab="Команда 5" key="5">
-                        {Team_===[]?<Spin />:<Space split={<Divider type="vertical" />}>
-                                              <Typography.Link onClick={() => callback_team_session(1,Team_)}>Смена 1</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(2,Team_)}>Смена 2</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(3,Team_)}>Смена 3</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(4,Team_)}>Смена 4</Typography.Link>
-                                              <Typography.Link onClick={() => callback_team_session(5,Team_)}>Смена 5</Typography.Link>
-                                            </Space>}
-                        {loading?<Spin />: <Table dataSource={ratingTableTeam_} columns={columns_rating_team} />}
-                    </TabPane>
-
-                </Tabs>
-
-                <div style={{ textAlign:'center'}}><h3>Таблица ответов</h3></div>
-                <Table dataSource={userTable} rowSelection={{ ...rowSelection }} columns={columns_Answers} />
+                <h3 style={{marginLeft:'5%'}}>Общие табличные данные и фильтр</h3>
+                <Card style={{margin:'5%',marginTop:'-0.5%'}}>
+                    <Row>
+                          <h3 style={{marginLeft:'20px'}}>История добавления баллов</h3>
+                          <Table dataSource={isLogData} style={{margin:'20px'}} bordered>
+                                <Column defaultFilteredValue={['Andrew']} title="ФИО" dataIndex="fio" key="fio"/>
+                                <Column title="Дата" dataIndex="date" key="date" />
+                                <Column title="Баллы" dataIndex="points" key="points"
+                                render={tags => (
+                                <Space size="middle">
+                                    <span style={{color:'green'}}>{tags} <CaretUpOutlined style={{ color: 'green' }} /></span>
+                                </Space>
+                              )}/>
+                                <Column title="Опрос/Тест" dataIndex="polls_test" key="polls_test" />
+                          </Table>
+                    </Row>
+                    <Row>
+                      <Col span={12}>
+                          <h3 style={{marginLeft:'20px'}}>Рейтинг всех участников</h3>
+                          <Table dataSource={isUserData} style={{margin:'20px'}} bordered>
+                                <Column width='5%' title="№п/п" dataIndex="num" key="num" />
+                                <Column width='30%' title="ФИО" dataIndex="fio" key="fio" />
+                                <Column width='10%' title="Баллы" dataIndex="points" key="points" />
+                                <Column width='15%' title="Команда" dataIndex="team" key="team" />
+                                <Column width='5%' title="Смена" dataIndex="session" key="session" />
+                          </Table>
+                      </Col>
+                      <Col span={12}>
+                          <h3 style={{marginLeft:'20px'}}>Рейтинг всех команд</h3>
+                          <Table dataSource={isTeamData} style={{margin:'20px'}} bordered>
+                                <Column width='5%' title="№п/п" dataIndex="num" key="num" />
+                                <Column title="Команда" dataIndex="team" key="team" />
+                                <Column title="Смена" dataIndex="session" key="session" />
+                                <Column width='15%' title="Баллы" dataIndex="points" key="points" />
+                          </Table>
+                      </Col>
+                    </Row>
+                </Card>
+                <TestTable/>
             </Content>
         </>
     )

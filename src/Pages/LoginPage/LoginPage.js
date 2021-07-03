@@ -1,7 +1,7 @@
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './LoginPage.css'
-import logo from './logo.svg'
+import logo from './logo.png'
 import API from "../../API";
 import {useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
@@ -46,7 +46,7 @@ return (
       }}
       onFinish={onFinish}
     >
-        <img src={logo} alt={logo}/>
+        <img style={{ width: "100%" }} src={logo} alt={logo}/>
         <h2>Авторизация</h2>
         <h5 style={{ color: "red" }}>{error}</h5>
       <Form.Item name="username"
@@ -81,7 +81,7 @@ return (
            Войти
         </Button>
       </Form.Item>
-        <h5>Забыли пароль? Обратитесь к администратору системы admin@mail.ru</h5>
+        <h5>Забыли пароль? Обратитесь к администратору системы makccom0@gmail.com или модератору форума</h5>
     </Form>
 
         )
