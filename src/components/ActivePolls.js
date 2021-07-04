@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import API from "../API";
 import {Option} from "antd/es/mentions";
 import zagl from './css/zagl.jpg'
-
+import { Radio } from 'antd';
 
 
 const ModalPoll = ({visible,params, onCancel}) => {
@@ -19,6 +19,7 @@ const ModalPoll = ({visible,params, onCancel}) => {
             params: {id:params.id}
         })
             .then(res => {
+                console.log(res.data)
                 setPoll(res.data)
                 setTitle(res.data.poll_info[0].title)
                 setIsLoading(false)
@@ -41,11 +42,11 @@ const ModalPoll = ({visible,params, onCancel}) => {
                     {poll.questions.map(question =>(
                         <>
                         <h4>{question.id}) {question.question}</h4>
-                        <Select placeholder='Выберите ответ' style={{ width: '100%' }}>
+                        <Radio.Group style={{ width: '100%' }}>
                     {question.answer.map(answer=>(
-                            <Option value={answer}>{answer}</Option>
+                            <Radio.Button value={answer}>{answer}</Radio.Button>
                         ))}
-                        </Select>
+                        </Radio.Group>
                         </>
                     ))}
                 </>}
@@ -106,7 +107,7 @@ function ActivePolls(){
                               />
                             }
                             actions={[
-                                <Button type="primary" ghost disabled onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                <Button type="primary" ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
                                 <Button onClick={() => onClick(p.id, 'archive', p.num_comp)}>В архив</Button>,
                                 <Button danger onClick={() => onClick(p.id, 'delete', p.num_comp)}>Удалить</Button>
                             ]}

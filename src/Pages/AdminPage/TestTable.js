@@ -50,6 +50,26 @@ function TestTable(){
                     <Option value="3">Команда 3</Option>
                     <Option value="4">Команда 4</Option>
                     <Option value="5">Команда 5</Option>
+                    <Option value="6">Команда 6</Option>
+                    <Option value="7">Команда 7</Option>
+                    <Option value="8">Команда 8</Option>
+                    <Option value="9">Команда 9</Option>
+                    <Option value="10">Команда 10</Option>
+                    <Option value="11">Команда 11</Option>
+                    <Option value="12">Команда 12</Option>
+                    <Option value="13">Команда 13</Option>
+                    <Option value="14">Команда 14</Option>
+                    <Option value="15">Команда 15</Option>
+                    <Option value="16">Команда 16</Option>
+                    <Option value="17">Команда 17</Option>
+                    <Option value="18">Команда 18</Option>
+                    <Option value="19">Команда 19</Option>
+                    <Option value="20">Команда 20</Option>
+                    <Option value="21">Команда 21</Option>
+                    <Option value="22">Команда 22</Option>
+                    <Option value="23">Команда 23</Option>
+                    <Option value="24">Команда 24</Option>
+                    <Option value="25">Команда 25</Option>
                 </Select>
                     </Form.Item>
                     <Form.Item style={{marginLeft: '2%', float: 'left'}} >

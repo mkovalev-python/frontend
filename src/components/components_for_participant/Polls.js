@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import API from "../../API";
 import Meta from "antd/es/card/Meta";
 import zagl from "../css/zagl.jpg";
+import Radio from "antd/es/radio/radio";
 const { Panel } = Collapse;
 
 
@@ -56,11 +57,12 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                 <Form form={form}>
                     {poll.questions.map(question =>(
                             <Form.Item name={question.question} label={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
-                                <Select placeholder='Выберите ответ' style={{ width: '100%' }}>
-                                {question.answer.map(answer=>(
-                                    <Select.Option value={answer}>{answer}</Select.Option>
-                                    ))}
-                                </Select>
+                                <Radio.Group style={{ width: '100%' }}>
+                            {question.answer.map(answer=>(
+                                    <Radio.Button value={answer}>{answer}</Radio.Button>
+                                ))}
+                                </Radio.Group>
+
                             </Form.Item>
 
                     ))}
@@ -175,7 +177,7 @@ function Polls() {
                                           />
                                         }
                                         actions={[
-                                            <Button type="primary" ghost onClick={() => onClick(p.id, 'test')}>Пройти опрос</Button>,
+                                            <Button type="primary" ghost onClick={() => onClick(p.id, 'test')}>Пройти тест</Button>,
                                         ]}
                                 >
                                           <Meta title={p.title} description={p.description}/>
