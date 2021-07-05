@@ -50,7 +50,7 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                     console.log('Validate Failed:', info);
                   });
               }}>
-            {isLoading?<h1>Вы прошли уже этот опрос</h1>:
+            {isLoading?<h1>Прохождение опроса недоступно</h1>:
 
                 <Form form={form}>
                     {poll.questions.map(question =>(

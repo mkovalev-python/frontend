@@ -54,11 +54,12 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                     console.log('Validate Failed:', info);
                   });
               }}>
-            {isLoading?<h1>Вы прошли уже этот опрос</h1>:
+            {isLoading?<h1>Прохождение опроса недоступно</h1>:
 
                 <Form form={form}>
                     {poll.questions.map(question =>(
-                            <Form.Item name={question.question} label={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
+                            <Form.Item name={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
+                                <p style={{ wordWrap: "break-word", width: "30%" }}>{question.question}</p>
                                 <Radio.Group style={{ width: '100%' }}>
                             {question.answer.map(answer=>(
                                     <Radio value={answer}>{answer}</Radio>
