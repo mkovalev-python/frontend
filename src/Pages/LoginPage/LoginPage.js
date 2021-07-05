@@ -4,13 +4,14 @@ import './LoginPage.css'
 import logo from './logo.png'
 import API from "../../API";
 import {useEffect, useState} from "react";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 
 
 function LoginPage(){
 
     const [value, setValue] = useState([])
     const [error, setError] = useState('')
+    const history = useHistory();
 
     const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -21,6 +22,7 @@ function LoginPage(){
             API.post('token/obtain/', value)
                 .then(res => {
                         sessionStorage.setItem('token', res.data.token)
+                        history.push('/');
 
                     }
                 )

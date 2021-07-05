@@ -4,6 +4,7 @@ import API from "../../API";
 import Meta from "antd/es/card/Meta";
 import zagl from "../css/zagl.jpg";
 import Radio from "antd/es/radio/radio";
+import {useHistory} from "react-router-dom";
 const { Panel } = Collapse;
 
 
@@ -59,7 +60,7 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                             <Form.Item name={question.question} label={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
                                 <Radio.Group style={{ width: '100%' }}>
                             {question.answer.map(answer=>(
-                                    <Radio.Button value={answer}>{answer}</Radio.Button>
+                                    <Radio value={answer}>{answer}</Radio>
                                 ))}
                                 </Radio.Group>
 
@@ -84,11 +85,11 @@ function Polls() {
 
 
     }
-
+    const history = useHistory();
     const onCreate = (values: any) => {
         API.post('/check/poll/team/',values)
             .then(res=>{
-
+                history.push('/');
             })
             .catch(error=>{
 
