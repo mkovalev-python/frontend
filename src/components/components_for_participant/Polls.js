@@ -37,6 +37,7 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
             okText="Ответить"
             cancelText="Отмена"
             onCancel={onCancel}
+            width={1000}
             onOk={() => {
                 form
                   .validateFields()
@@ -89,13 +90,14 @@ function Polls() {
     const onCreate = (values: any) => {
         API.post('/check/poll/team/',values)
             .then(res=>{
-                history.push('/');
+
             })
             .catch(error=>{
 
             })
 
         setIsModalVisible(false);
+        history.push('/');
     };
 
 
