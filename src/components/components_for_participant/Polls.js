@@ -115,7 +115,7 @@ function Polls() {
     return (
         <>
             <Divider>Активные опросы</Divider>
-            <Collapse defaultActiveKey={['1']} ghost>
+            <Collapse defaultActiveKey={['1','3']} ghost>
                 {polls['service'] === null ? null :
                     <Panel header="Службы" key="1">
                         <Row gutter={[26, 8]}>
@@ -165,7 +165,7 @@ function Polls() {
                         </Row>
                     </Panel>}
                 {polls['test']===null?null:
-                    <Panel header= "Тест" key="3">
+                    <Panel header= "Тестирование по Компетенциям" key="3">
                         <Row gutter={[26, 8]}>
                             {polls['test'].map(p=>(
                                 <Col>
