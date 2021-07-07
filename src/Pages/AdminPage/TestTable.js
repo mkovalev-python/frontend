@@ -1,7 +1,7 @@
-import {Button, Card, Form, Select, Space, Table, Tag, Tooltip} from 'antd';
+import {Button, Card, Form, Select, Space, Spin, Table, Tag, Tooltip} from 'antd';
 import {Option} from "antd/es/mentions";
 import API from "../../API";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
 
@@ -27,6 +27,23 @@ function TestTable(){
                 console.log(error.request)
             })
   };
+     const [team, setTeam] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(()=>{
+            API.get('get/list/option/', {
+        headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}})
+                .then(res =>{
+                    setIsLoading(false)
+                    setTeam(res.data.team)
+
+                })
+                .catch(error=>{
+                    console.log(error.response)
+                })
+        }, [])
+    if(isLoading){
+            return <Spin />
+        }
 
     return(
         <div style={{marginLeft:'5%', marginRight: '5%'}}>
@@ -44,33 +61,11 @@ function TestTable(){
                 </Select>
                     </Form.Item>
                     <Form.Item style={{width: '180px', float: 'left', marginLeft: '1%'}} name="team" rules={[{ required: true }]}>
-                        <Select placeholder="Выберите команду">
-                    <Option value="1">Команда 1</Option>
-                    <Option value="2">Команда 2</Option>
-                    <Option value="3">Команда 3</Option>
-                    <Option value="4">Команда 4</Option>
-                    <Option value="5">Команда 5</Option>
-                    <Option value="6">Команда 6</Option>
-                    <Option value="7">Команда 7</Option>
-                    <Option value="8">Команда 8</Option>
-                    <Option value="9">Команда 9</Option>
-                    <Option value="10">Команда 10</Option>
-                    <Option value="11">Команда 11</Option>
-                    <Option value="12">Команда 12</Option>
-                    <Option value="13">Команда 13</Option>
-                    <Option value="14">Команда 14</Option>
-                    <Option value="15">Команда 15</Option>
-                    <Option value="16">Команда 16</Option>
-                    <Option value="17">Команда 17</Option>
-                    <Option value="18">Команда 18</Option>
-                    <Option value="19">Команда 19</Option>
-                    <Option value="20">Команда 20</Option>
-                    <Option value="21">Команда 21</Option>
-                    <Option value="22">Команда 22</Option>
-                    <Option value="23">Команда 23</Option>
-                    <Option value="24">Команда 24</Option>
-                    <Option value="25">Команда 25</Option>
-                </Select>
+                        <Select>
+                        {team.map(t=>(
+                            <Select.Option value={t.id-1}>{t.name}</Select.Option>
+                        ))}
+                    </Select>
                     </Form.Item>
                     <Form.Item style={{marginLeft: '2%', float: 'left'}} >
                         <Button htmlType="submit" type="primary">Применить</Button>

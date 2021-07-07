@@ -23,12 +23,8 @@ function Nav(){
     return(
 
         <Header>
-            <Menu style={{}}onClick={handleClick} mode="horizontal">
-                <a href='/'><img src={logo} style={{marginLeft: '25%'}} className='Logo' alt='logo'/></a>
-                <Button style={{color: 'white'}} type='link' onClick={() => handleClick('logout')}>Выход</Button>
-                {/*<Menu.Item style={{ color: 'white', marginRight: '25%' }} key="logout" icon={<PoweroffOutlined />}>Выход</Menu.Item>*/}
-            </Menu>
-
+                <a href='/'><img src={logo} style={{marginLeft: '5%'}} className='Logo' alt='logo'/></a>
+                <Button style={{color: 'white', marginLeft: '80%'}} type='link' onClick={() => handleClick('logout')}>Выход</Button>
         </Header>
 
     )

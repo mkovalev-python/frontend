@@ -10,16 +10,15 @@ import {CaretUpOutlined} from "@ant-design/icons";
 import TestTable from "./TestTable";
 const { Column } = Table;
 
-
 function AnalyticsPage(){
-    const onFinish = (values: any) => {
-        console.log(values)}
 
     const [isLoading, setIsLoading] = useState(true)
 
     const [isLogData, setIsLogData] = useState()
     const [isUserData, setIsUserData] = useState()
     const [isTeamData, setIsTeamData] = useState()
+
+    /*Добавление поиска в колонку*/
 
 
     /* Запрос на общие таблицы */
@@ -59,7 +58,7 @@ function AnalyticsPage(){
                 <Card style={{margin:'5%',marginTop:'-0.5%'}}>
                     <Row>
                           <h3 style={{marginLeft:'20px'}}>История добавления баллов</h3>
-                          <Table dataSource={isLogData} style={{margin:'20px'}} bordered>
+                          <Table dataSource={isLogData} style={{width: '100%',margin:'20px'}} bordered>
                                 <Column defaultFilteredValue={['Andrew']} title="ФИО" dataIndex="fio" key="fio"/>
                                 <Column title="Дата" dataIndex="date" key="date" />
                                 <Column title="Баллы" dataIndex="points" key="points"
@@ -68,7 +67,7 @@ function AnalyticsPage(){
                                     <span style={{color:'green'}}>{tags} <CaretUpOutlined style={{ color: 'green' }} /></span>
                                 </Space>
                               )}/>
-                                <Column title="Опрос/Тест" dataIndex="polls_test" key="polls_test" />
+                                <Column width='50%' title="Опрос/Тест" dataIndex="polls_test" key="polls_test" />
                           </Table>
                     </Row>
                     <Row>
@@ -85,7 +84,7 @@ function AnalyticsPage(){
                       <Col span={12}>
                           <h3 style={{marginLeft:'20px'}}>Рейтинг всех команд</h3>
                           <Table dataSource={isTeamData} style={{margin:'20px'}} bordered>
-                                <Column width='5%' title="№п/п" dataIndex="num" key="num" />
+                                <Column width='5%' title="№п/п" dataIndex="num" key="num" sorter={(a, b) => a.num - b.num}/>
                                 <Column title="Команда" dataIndex="team" key="team" />
                                 <Column title="Смена" dataIndex="session" key="session" />
                                 <Column width='15%' title="Баллы" dataIndex="points" key="points" />

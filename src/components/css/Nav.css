@@ -1,15 +1,8 @@
 .ant-layout-header{
     background: #ffa300;
-
-}
-.ant-menu-horizontal{
     background-image: url("back.jpg");
     background-size: 90%;
-    width: 108%;
-    /*margin-right: auto;*/
-}
-.ant-menu-item{
-    float: right;
+
 }
 .Logo {
     width: 60px;
