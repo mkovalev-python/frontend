@@ -64,8 +64,7 @@ function TestTable(){
                         <Select>
                         {team.map(t=>(
                             <>
-                            console.log(index)
-                            <Select.Option value={index+1}>{t.name}</Select.Option></>
+                            <Select.Option key={t.id+1} value={t.id+1}>{t.name}</Select.Option></>
                         ))}
                     </Select>
                     </Form.Item>
