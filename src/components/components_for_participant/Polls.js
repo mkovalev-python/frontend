@@ -58,7 +58,7 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
 
                 <Form form={form}>
                     {poll.questions.map(question =>(
-                        <><p style={{ wordWrap: "break-word",fontSize:'1.2em',fontWeight:'bold', width: "100%", padding: '5%' }}>{question.question}</p>
+                        <><p style={{ wordWrap: "break-word",fontSize:'1.2em',fontWeight:'bold', width: "100%", padding: '0.5%' }}>{question.question}</p>
                             <Form.Item name={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
                                 <Radio.Group style={{ width: '100%' }}>
                             {question.answer.map(answer=>(

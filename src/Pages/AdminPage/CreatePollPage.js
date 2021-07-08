@@ -243,7 +243,7 @@ function CreatePollPage(){
                 На главную
             </Button>
 
-            <Form onFinish={onFinish}>
+            <Form style={{margin: '2%',marginRight:'25%',marginLeft:'25%', width: '50%'}} onFinish={onFinish}>
                 <Form.Item name='title' label='Заголовок опроса'>
                     <Input placeholder='Введите заголовок опроса'/>
                 </Form.Item>
@@ -281,6 +281,7 @@ function CreatePollPage(){
                 </Form.Item>
                     {latePosting?
                         <Form.Item name='datePosting'>
+                            <p style={{color: "red"}}>*На данный момент отложный постинг по времени не работает, пост будет помещен в раздел "Отложенные опросы", но опубликовать требуется вручную</p>
                             <DatePicker showTime format="DD/MM/YYYY HH:mm" />
                         </Form.Item>:null}
 

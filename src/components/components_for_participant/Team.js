@@ -4,6 +4,7 @@ import API from "../../API";
 import Title from "antd/es/typography/Title";
 
 import avatar from '../css/avatar.jpg'
+import Radio from "antd/es/radio/radio";
 
 const ModalPoll = ({visible,params, onCancel, onCreate}) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -54,13 +55,15 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
 
                 <Form form={form}>
                     {poll.questions.map(question =>(
-                            <Form.Item name={question.question} label={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
-                                <Select placeholder='Выберите ответ' style={{ width: '100%' }}>
-                                {question.answer.map(answer=>(
-                                    <Select.Option value={answer}>{answer}</Select.Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
+                        <><p style={{ wordWrap: "break-word",fontSize:'1.2em',fontWeight:'bold', width: "100%", padding: '0.5%' }}>{question.question}</p>
+                            <Form.Item name={question.question} rules={[{ required: true, message: 'Вы не ответили на вопрос' }]}>
+                                <Radio.Group style={{ width: '100%' }}>
+                            {question.answer.map(answer=>(
+                                    <Radio value={answer}>{answer}</Radio>
+                                ))}
+                                </Radio.Group>
+
+                            </Form.Item></>
 
                     ))}
                 </Form>}
