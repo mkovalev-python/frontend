@@ -90,14 +90,14 @@ function Polls() {
     const onCreate = (values: any) => {
         API.post('/check/poll/team/',values)
             .then(res=>{
-
+                window.location.reload();
             })
             .catch(error=>{
 
             })
 
         setIsModalVisible(false);
-        window.location.reload();
+
     };
 
 

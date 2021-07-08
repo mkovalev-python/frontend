@@ -1,4 +1,4 @@
-import {Avatar, Button, Col, Divider, Empty, Form, Modal, Row, Select, Spin} from "antd";
+import {Avatar, Button, Col, Divider, Empty, Form, message, Modal, Row, Select, Spin} from "antd";
 import {useEffect, useState} from "react"
 import API from "../../API";
 import Title from "antd/es/typography/Title";
@@ -83,14 +83,16 @@ function Team(){
     const onCreate = (values: any) => {
         API.post('/check/poll/team/',values)
             .then(res=>{
+                    message.success('Опрос пройдет успешно')
+                window.location.reload();
 
             })
             .catch(error=>{
-
+                    message.error('Упс.. Что-то пошло не так!')
             })
 
         setIsModalVisible(false);
-        window.location.reload();
+
     };
 
     useEffect(()=>{
