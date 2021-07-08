@@ -8,7 +8,7 @@ import avatar from '../css/avatar.jpg'
 const ModalPoll = ({visible,params, onCancel, onCreate}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [poll, setPoll] = useState([])
-    const [title, setTitle] = useState('Title')
+    const [title, setTitle] = useState('Увы..Опрос недоступен или Вы его прошли!')
     const [form] = Form.useForm();
 
     useEffect(()=>{
@@ -90,6 +90,7 @@ function Team(){
             })
 
         setIsModalVisible(false);
+        window.location.reload();
     };
 
     useEffect(()=>{

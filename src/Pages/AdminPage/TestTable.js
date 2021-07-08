@@ -2,10 +2,9 @@ import {Button, Card, Form, Select, Space, Spin, Table, Tag, Tooltip} from 'antd
 import {Option} from "antd/es/mentions";
 import API from "../../API";
 import React, {useEffect, useState} from "react";
-
-
-
 const { Column, ColumnGroup } = Table;
+
+
 function TestTable(){
     const [params, setParams] = useState('')
     const [isUsers, setIsUsers] = useState()
@@ -28,6 +27,7 @@ function TestTable(){
             })
   };
      const [team, setTeam] = useState([])
+    const index = 0
     const [isLoading, setIsLoading] = useState(true)
     useEffect(()=>{
             API.get('get/list/option/', {
@@ -63,7 +63,9 @@ function TestTable(){
                     <Form.Item style={{width: '180px', float: 'left', marginLeft: '1%'}} name="team" rules={[{ required: true }]}>
                         <Select>
                         {team.map(t=>(
-                            <Select.Option value={t.id-1}>{t.name}</Select.Option>
+                            <>
+                            console.log(index)
+                            <Select.Option value={index+1}>{t.name}</Select.Option></>
                         ))}
                     </Select>
                     </Form.Item>

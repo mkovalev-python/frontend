@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 const ModalPoll = ({visible,params, onCancel, onCreate}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [poll, setPoll] = useState([])
-    const [title, setTitle] = useState('Title')
+    const [title, setTitle] = useState('Увы..Опрос недоступен или Вы его прошли!')
     const [form] = Form.useForm();
 
     useEffect(()=>{
@@ -81,13 +81,12 @@ function Polls() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [params, setParams] = useState([])
 
-        function onClick(id, type){
+    function onClick(id, type){
         setParams({id:id, type: type})
         setIsModalVisible(true)
 
 
     }
-    const history = useHistory();
     const onCreate = (values: any) => {
         API.post('/check/poll/team/',values)
             .then(res=>{
@@ -98,7 +97,7 @@ function Polls() {
             })
 
         setIsModalVisible(false);
-        history.push('/');
+        window.location.reload();
     };
 
 

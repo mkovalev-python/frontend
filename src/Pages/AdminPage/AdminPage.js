@@ -14,7 +14,7 @@ function AdminPage(){
             <ActivePolls/>
             <LatePolls />
             <ArchivePolls />
-            <Footer style={{ textAlign: 'center' }}>MVP Territory of Meanings ©2021 Created by ...</Footer>
+            <Footer style={{ textAlign: 'center' }}>MVP Territory of Meanings ©2021 1.3 Version</Footer>
         </>
     )
 
