@@ -35,6 +35,7 @@ function TestTable(){
                 .then(res =>{
                     setIsLoading(false)
                     setTeam(res.data.team)
+                    console.log(res.data.team)
 
                 })
                 .catch(error=>{
@@ -64,7 +65,7 @@ function TestTable(){
                         <Select>
                         {team.map(t=>(
                             <>
-                            <Select.Option key={t.id+1} value={t.id+1}>{t.name}</Select.Option></>
+                            <Select.Option key={t.id-1} value={t.id-1}>{t.name}</Select.Option></>
                         ))}
                     </Select>
                     </Form.Item>
