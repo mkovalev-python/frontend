@@ -65,7 +65,7 @@ function TestTable(){
                         <Select>
                         {team.map(t=>(
                             <>
-                            <Select.Option key={t.id-1} value={t.id-1}>{t.name}</Select.Option></>
+                            <Select.Option key={t.id} value={t.id}>{t.name}</Select.Option></>
                         ))}
                     </Select>
                     </Form.Item>
