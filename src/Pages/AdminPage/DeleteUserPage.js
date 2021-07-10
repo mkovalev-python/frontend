@@ -1,21 +1,25 @@
 import Nav from "../../components/Nav";
 import ProfileStaff from "../../components/ProfileStaff";
 import {Content} from "antd/es/layout/layout";
-import {Button, Divider, Drawer, message, Popconfirm, Skeleton, Space, Spin, Table} from "antd";
+import {Button, Divider, Drawer, Form, InputNumber, message, Popconfirm, Skeleton, Space, Spin, Table} from "antd";
 import {LeftOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Redirect, useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import API from "../../API";
+import Search from "antd/es/input/Search";
 const { Column } = Table;
 
 function DeleteUserPage(){
 
     const history = useHistory();
+    const [copyListUsers, setCopyListUser] = useState('')
+
 
     function handleClick(e) {
             console.log(e)
             history.push(e);
             }
+
     function handleCl(e) {
         setDelUser(e)
             }
@@ -49,6 +53,7 @@ function DeleteUserPage(){
             .then(res=>{
                 console.log(res.data)
                 setIsLoading(false)
+                setCopyListUser(res.data)
                 setUsers(res.data)
             })
             .catch(error=>{
@@ -117,6 +122,7 @@ function DeleteUserPage(){
 
     const [visible, setVisible] = useState(false);
     const [infoUser, setInfoUser] = useState('')
+    const [addUser, setAddUser] = useState(false)
     function showDrawer(e){
         API.get('/get/users/info/', {
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
@@ -145,6 +151,36 @@ function DeleteUserPage(){
         return <Redirect to="/"/>
     }
 
+   const onFinish = (values) => {
+       API.get('/pull/points/', {
+            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
+            params: {points: values['points'], username: infoUser.username}
+        })
+            .then(res=>{
+                message.success('Баллы успешно добавлены!')
+                infoUser.points = res.data.points
+                setAddUser(false);
+
+            })
+            .catch(error=>{
+                message.error('Баллы не изменены!')
+                setAddUser(false);
+            })
+   }
+   const onSearch = value => {
+       API.get('/search/user/', {
+            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
+            params: {value}
+        })
+            .then(res=>{
+                console.log(res.data)
+                setUsers(res.data)
+            })
+            .catch(error=>{
+
+            })
+   }
+
     return(
         <>
             <Nav />
@@ -154,6 +190,8 @@ function DeleteUserPage(){
                 <Button style={{float: 'left'}} type="link" icon={<LeftOutlined />} ghost onClick={() => handleClick('')}>
                     На главную
                 </Button>
+                <Search style={{width: '30%'}} placeholder="Поиск по Фамилии или Имени" enterButton onSearch={onSearch}/>
+                <Button onClick={() => {setUsers(copyListUsers)}} type='link'>Сброс поиска</Button>
 
             <Table dataSource={users} columns={columns} />
                 <Drawer width='30%' title={infoUser === ''?<Skeleton.Input style={{ width: 250 }} active={false} size={'default'} />:<p>{infoUser.FirstLastName}</p>} placement="right" closable={false} onClose={onClose} visible={visible}>
@@ -167,7 +205,16 @@ function DeleteUserPage(){
                             <p>Команда: {infoUser.team}</p>
                             <p>Смена: {infoUser.session}</p>
                             <p>Баллы: {infoUser.points}</p>
-                            <Button style={{width: '100%'}} type='primary' disabled>Добавить баллов</Button>
+                            {addUser?<Form onFinish={onFinish}>
+                                <Divider>Начисление баллов</Divider>
+                                <Form.Item name="points" style={{float: 'left', marginRight: 20}}>
+                                    <InputNumber placeholder='Баллы'/>
+                                </Form.Item>
+                                <Form.Item style={{float: 'left'}}>
+                                    <Button type="" htmlType="submit">+</Button>
+                                </Form.Item>
+                            </Form>:null}
+                            <Button style={{width: '100%'}} type='primary' onClick={() => {setAddUser(true);}} >Добавить баллов</Button>
                             <h3>Список пройденных опросов</h3>
                             <Table dataSource={infoUser.name_polls} scroll={{ y: 1500 }}>
                                 <Column width='20%' title="№п/п" dataIndex="num" key="num" />
