@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import API from "../API";
-import {Button, Card, Col, Divider, Modal, Row, Select, Spin} from "antd";
+import {Button, Card, Col, Divider, Form, InputNumber, Modal, Row, Select, Spin} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Meta from "antd/es/card/Meta";
 import {Option} from "antd/es/mentions";
@@ -59,10 +59,11 @@ function LatePolls(){
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [params, setParams] = useState([])
 
+
     function onClick(id,type, comp){
         setParams({id:id, type:type, comp: comp})
         if(type==='view'){
-        setIsModalVisible(true)}
+            setIsModalVisible(true)}
         else {
             API.post('/move/polls/', {id:id, type:type, comp: comp})
                 .then(res=>{
@@ -70,6 +71,7 @@ function LatePolls(){
                 })
                 .catch(error=>{})
         }
+
 
     }
 
@@ -96,7 +98,7 @@ function LatePolls(){
             <Row gutter={[26, 8]}>
             {polls.map(p=>(
                 <Col>
-                      <Card style={{ width: 300 }}
+                      <Card style={{ width: 350 }}
                             cover={
                               <img
                                 alt="example"
@@ -104,13 +106,15 @@ function LatePolls(){
                               />
                             }
                             actions={[
-                                <Button type="primary" disabled ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
-                                <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Опубликовать</Button>,
+                                <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
 
                             ]}
                     >
                           <Meta title={p.title} description={p.description}/>
                           <span>Количество баллов: <b>{p.points}</b> </span>
+                          <span>Смена: <b>{p.session}</b> </span>
                     </Card>
                 </Col>
             ))}

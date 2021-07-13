@@ -6,7 +6,7 @@ import {Content} from "antd/es/layout/layout";
 import {Option} from "antd/es/mentions";
 import { Row, Col } from 'antd';
 import API from "../../API";
-import {CaretUpOutlined} from "@ant-design/icons";
+import {CaretUpOutlined, DownloadOutlined, FileExcelOutlined} from "@ant-design/icons";
 import TestTable from "./TestTable";
 const { Column } = Table;
 
@@ -17,7 +17,7 @@ function AnalyticsPage(){
     const [isLogData, setIsLogData] = useState()
     const [isUserData, setIsUserData] = useState()
     const [isTeamData, setIsTeamData] = useState()
-
+    const [isLink, setIsLink] = useState('')
     /*Добавление поиска в колонку*/
 
 
@@ -31,6 +31,7 @@ function AnalyticsPage(){
                 setIsLogData(req.data.logger)
                 setIsUserData(req.data.rating_user)
                 setIsTeamData(req.data.rating_team)
+                setIsLink(req.data.link)
                 setIsLoading(false)
             })
             .catch(error=>{
@@ -54,7 +55,8 @@ function AnalyticsPage(){
             <ProfileStaff/>
             <Content style={{width: '100%'}}>
                 <Divider>Аналитика</Divider>
-                <h3 style={{marginLeft:'5%'}}>Общие табличные данные и фильтр</h3>
+                <h3 style={{marginLeft:'5%', float:"left"}}>Общие табличные данные и фильтр</h3>
+                 <Button style={{margin:'4px', marginBottom:'1%'}} type="" shape="circle" href={isLink} icon={<FileExcelOutlined />}/>
                 <Card style={{margin:'5%',marginTop:'-0.5%'}}>
                     <Row>
                           <h3 style={{marginLeft:'20px'}}>История добавления баллов</h3>
@@ -72,7 +74,8 @@ function AnalyticsPage(){
                     </Row>
                     <Row>
                       <Col span={12}>
-                          <h3 style={{marginLeft:'20px'}}>Рейтинг всех участников</h3>
+                          <h3 style={{marginLeft:'20px',marginRight:'20px', float:'left'}}>Рейтинг всех участников</h3>
+
                           <Table dataSource={isUserData} style={{margin:'20px'}} bordered>
                                 <Column width='5%' title="№п/п" dataIndex="num" key="num" />
                                 <Column width='30%' title="ФИО" dataIndex="fio" key="fio" />
