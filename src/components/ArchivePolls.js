@@ -74,6 +74,22 @@ function LatePolls(){
 
 
     }
+    function onClickReport(id,type, comp){
+        setParams({id:id, type:type, comp: comp})
+        if(type==='view'){
+            setIsModalVisible(true)}
+        else {
+            API.post('/move/polls/', {id:id, type:type, comp: comp})
+                .then(res=>{
+                    const link = document.createElement('a');
+                    link.href = res.data['link'];
+                    link.click();
+                })
+                .catch(error=>{})
+        }
+
+
+    }
 
 
     useEffect(()=>{
@@ -100,21 +116,26 @@ function LatePolls(){
                 <Col>
                       <Card style={{ width: 350 }}
                             cover={
+                                <>
                               <img
                                 alt="example"
                                 src={zagl}
                               />
+                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+</>
                             }
                             actions={[
                                 <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
                                 <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
                                 <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
 
+
                             ]}
                     >
                           <Meta title={p.title} description={p.description}/>
                           <span>Количество баллов: <b>{p.points}</b> </span>
                           <span>Смена: <b>{p.session}</b> </span>
+
                     </Card>
                 </Col>
             ))}
