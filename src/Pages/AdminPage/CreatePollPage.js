@@ -16,7 +16,13 @@ import {
     Switch,
     Table
 } from "antd";
-import {LeftOutlined, MinusCircleOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {
+    CheckOutlined, CloseOutlined,
+    LeftOutlined,
+    MinusCircleOutlined,
+    PlusOutlined,
+    QuestionCircleOutlined
+} from "@ant-design/icons";
 import {Redirect, useHistory} from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import {Option} from "antd/es/mentions";
@@ -85,10 +91,14 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, category }) => {
                 Добавить еще один вариант ответа
               </Button>
             </Form.Item>
+
+
           </>
         )}
       </Form.List>}
-
+        {/*<Form.Item name='freeAnswer' label='Использовать произвольный ответ'>*/}
+        {/*          <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} defaultUnChecked/>*/}
+        {/*</Form.Item>*/}
 
       </Form>
     </Modal>

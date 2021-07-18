@@ -1,10 +1,11 @@
-import {Button, Card, Col, Collapse, Divider, Form, Modal, Row, Select, Spin} from "antd";
+import {Button, Card, Col, Collapse, Divider, Form, Input, Modal, Row, Select, Spin} from "antd";
 import {useEffect, useState} from "react";
 import API from "../../API";
 import Meta from "antd/es/card/Meta";
 import zagl from "../css/zagl.jpg";
 import Radio from "antd/es/radio/radio";
 import {useHistory} from "react-router-dom";
+import TextArea from "antd/es/input/TextArea";
 const { Panel } = Collapse;
 
 
@@ -29,6 +30,12 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                 console.log(error.request)
             })
     },[])
+
+    const [value, setValue] = useState();
+
+      const onChange = e => {
+        setValue(e)
+      };
 
     return(
         <Modal
@@ -65,8 +72,8 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                                     <Radio value={answer}>{answer}</Radio>
                                 ))}
                                 </Radio.Group>
-
-                            </Form.Item></>
+                            </Form.Item>
+                        </>
 
                     ))}
                 </Form>}
@@ -88,6 +95,8 @@ function Polls() {
 
     }
     const onCreate = (values: any) => {
+
+        console.log(values)
         API.post('/check/poll/team/',values)
             .then(res=>{
                 window.location.reload();

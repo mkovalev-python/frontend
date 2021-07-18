@@ -6,6 +6,7 @@ import API from "../API";
 import {Option} from "antd/es/mentions";
 import zagl from './css/zagl.jpg'
 import { Radio } from 'antd';
+import TextArea from "antd/es/input/TextArea";
 
 
 const ModalPoll = ({visible,params, onCancel}) => {
@@ -46,7 +47,10 @@ const ModalPoll = ({visible,params, onCancel}) => {
                     {question.answer.map(answer=>(
                             <Radio.Button value={answer}>{answer}</Radio.Button>
                         ))}
+
                         </Radio.Group>
+
+                            {question.freeAnswer?<><p>Свой вариант</p><TextArea showCount maxLength={100} /></>:null}
                         </>
                     ))}
                 </>}

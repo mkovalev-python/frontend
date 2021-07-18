@@ -181,6 +181,19 @@ function DeleteUserPage(){
             })
    }
 
+   const sendNewPassword = value => {
+    API.get('/send/new/password', {
+            headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
+            params: {value}
+        })
+            .then(res=>{
+                message.success('Пароль успешно отправлен')
+            })
+            .catch(error=>{
+                message.error('Произошла ошибка, попробуйте еще раз')
+            })
+   }
+
     return(
         <>
             <Nav />
@@ -215,6 +228,8 @@ function DeleteUserPage(){
                                 </Form.Item>
                             </Form>:null}
                             <Button style={{width: '100%'}} type='primary' onClick={() => {setAddUser(true);}} >Добавить баллов</Button>
+                            <Button style={{marginTop: '2%', width: '100%'}} type='primary' onClick={() => {sendNewPassword(infoUser.username)}}>Отправить новый пароль</Button>
+
                             <h3>Список пройденных опросов</h3>
                             <Table dataSource={infoUser.name_polls} scroll={{ y: 1500 }}>
                                 <Column width='20%' title="№п/п" dataIndex="num" key="num" />
