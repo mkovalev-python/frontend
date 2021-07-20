@@ -190,7 +190,7 @@ function DeleteUserPage(){
                 message.success('Пароль успешно отправлен')
             })
             .catch(error=>{
-                message.error('Произошла ошибка, попробуйте еще раз')
+                message.error('Возможно у пользователя нет электронного адреса')
             })
    }
 

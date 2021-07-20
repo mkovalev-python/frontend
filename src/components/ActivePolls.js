@@ -147,7 +147,6 @@ function ActivePolls(){
 
     function onClick(id,type, comp){
         setParams({id:id, type:type, comp: comp})
-        console.log(comp)
         if(type==='view'){
             message.warning("Просмотр тестов временно не работает")
             setIsModalVisible(true)
