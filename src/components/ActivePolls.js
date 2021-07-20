@@ -1,12 +1,28 @@
-import {Button, Card, Col, Divider, Modal, Row, Select, Spin} from "antd";
+import {
+    Alert,
+    Button,
+    Card,
+    Col,
+    Divider,
+    Form,
+    Input,
+    InputNumber,
+    message,
+    Modal,
+    Row,
+    Select,
+    Skeleton,
+    Spin
+} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Meta from "antd/es/card/Meta";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState } from 'react';
+
 import API from "../API";
-import {Option} from "antd/es/mentions";
 import zagl from './css/zagl.jpg'
 import { Radio } from 'antd';
 import TextArea from "antd/es/input/TextArea";
+import {EditOutlined} from "@ant-design/icons";
 
 
 const ModalPoll = ({visible,params, onCancel}) => {
@@ -32,7 +48,6 @@ const ModalPoll = ({visible,params, onCancel}) => {
         <Modal
             visible={visible}
             title={title}
-            okText="Редактировать"
             cancelText="Отмена"
             onCancel={onCancel}>
             {isLoading?<Spin/>:
@@ -58,17 +73,85 @@ const ModalPoll = ({visible,params, onCancel}) => {
     )
 }
 
+const CollectionCreateForm = ({ visible,p, onCreate, onCancel }) => {
+  const [form] = Form.useForm();
+  const [params, setParams] = useState()
+  const [loading, setLoading] = useState(true)
+  useEffect(()=>{
+      setParams(p)
+      setLoading(false)
+  })
+
+  return (
+    <Modal
+      visible={visible}
+      title={p.title}
+      okText="Изменить"
+      cancelText="Отмена"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            onCreate(values);
+          })
+          .catch((info) => {
+
+          });
+      }}
+    >{loading?<Skeleton />:
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        fields={[{"name": ["title"], "value": p.title},
+                 {"name": ["description"], "value": p.description},
+                 {"name": ["points"], "value": p.points},
+                 {"name": ["session"], "value": p.session},
+                 {"name": ["comp"], "value": p.num_comp},
+                 {"name": ["id"], "value": p.id}
+        ]}
+
+      >
+        <Form.Item name='id' label='ID'>
+            <InputNumber disabled/>
+        </Form.Item>
+        <Form.Item name="title" label="Название">
+          <Input value={p.title} />
+        </Form.Item>
+        <Form.Item name="description" label="Описание">
+          <Input.TextArea type="textarea" maxLength={255} />
+        </Form.Item>
+        <Form.Item name='points' label='Баллы'>
+            <InputNumber min={1}/>
+        </Form.Item>
+        <Form.Item name='session' label='Смена'>
+            <InputNumber min={1} max={5}/>
+        </Form.Item>
+          {p.num_comp &&
+          <Form.Item name='comp' label='Компетенция'>
+            <InputNumber max={4} min={1}/>
+        </Form.Item>}
+
+      </Form>}
+    </Modal>
+  )
+}
 
 function ActivePolls(){
     const [polls,setPolls] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [params, setParams] = useState([])
+    const [visible, setVisible] = useState(false);
 
     function onClick(id,type, comp){
         setParams({id:id, type:type, comp: comp})
+        console.log(comp)
         if(type==='view'){
-        setIsModalVisible(true)}
+            message.warning("Просмотр тестов временно не работает")
+            setIsModalVisible(true)
+        }
         else {
             API.post('/move/polls/', {id:id, type:type, comp: comp})
                 .then(res=>{
@@ -97,6 +180,20 @@ function ActivePolls(){
     }
 
 
+
+
+    const onCreate = (values) => {
+      console.log('Received values of form: ', values);
+      API.post('/edit/',values)
+            .then(res=>(
+                message.success('Изменения сохранены')
+            ))
+            .catch(error=>(
+                message.error('Ошибка')
+            ))
+      setVisible(false);
+    };
+
     return(
         <Content>
         <Divider>Активные опросы</Divider>
@@ -105,10 +202,11 @@ function ActivePolls(){
                 <Col>
                       <Card style={{ width: 300 }}
                             cover={
-                              <img
-                                alt="example"
-                                src={zagl}
-                              />
+                                <>
+                                    <img alt="example" src={zagl}/>
+                                    <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                    <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                </>
                             }
                             actions={[
                                 <Button type="primary" ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
