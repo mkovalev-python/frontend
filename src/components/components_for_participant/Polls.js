@@ -31,11 +31,12 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
             })
     },[])
 
-    const [value, setValue] = useState();
+    const [value, setValue] = useState('');
 
-      const onChange = e => {
-        setValue(e)
+      const onChanges = e => {
+        setValue(e.target.value)
       };
+
 
     return(
         <Modal
@@ -70,7 +71,9 @@ const ModalPoll = ({visible,params, onCancel, onCreate}) => {
                                 <Radio.Group style={{ width: '100%' }}>
                             {question.answer.map(answer=>(
                                     <Radio value={answer}>{answer}</Radio>
+
                                 ))}
+                                    {question.freeAnswer && <Radio value={value}><Input maxLenght={500} placeholder='Введите свой вариант ответа' onInput={onChanges} /></Radio> }
                                 </Radio.Group>
                             </Form.Item>
                         </>
@@ -96,7 +99,7 @@ function Polls() {
     }
     const onCreate = (values: any) => {
 
-        console.log(values)
+        console.log('hkjh',values)
         API.post('/check/poll/team/',values)
             .then(res=>{
                 window.location.reload();

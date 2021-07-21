@@ -96,9 +96,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, category }) => {
           </>
         )}
       </Form.List>}
-        {/*<Form.Item name='freeAnswer' label='Использовать произвольный ответ'>*/}
-        {/*          <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} defaultUnChecked/>*/}
-        {/*</Form.Item>*/}
+        <Form.Item name='freeAnswer' label='Использовать произвольный ответ'>
+                  <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} defaultUnChecked/>
+        </Form.Item>
 
       </Form>
     </Modal>
