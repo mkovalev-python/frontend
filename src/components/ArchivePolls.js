@@ -1,11 +1,27 @@
 import React, {useEffect, useState} from "react";
 import API from "../API";
-import {Button, Card, Col, Divider, Form, Input, InputNumber, message, Modal, Row, Select, Skeleton, Spin} from "antd";
+import {
+    Button,
+    Card,
+    Col,
+    Collapse,
+    Divider, Empty,
+    Form,
+    Input,
+    InputNumber,
+    message,
+    Modal,
+    Row,
+    Select,
+    Skeleton,
+    Spin
+} from "antd";
 import {Content} from "antd/es/layout/layout";
 import Meta from "antd/es/card/Meta";
 import {Option} from "antd/es/mentions";
 import zagl from "./css/zagl.jpg";
 import {EditOutlined} from "@ant-design/icons";
+const { Panel } = Collapse;
 
 
 const ModalPoll = ({visible,params, onCancel}) => {
@@ -118,6 +134,7 @@ const CollectionCreateForm = ({ visible,p, onCreate, onCancel }) => {
   )
 }
 
+
 function LatePolls(){
     const [polls,setPolls] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -162,6 +179,7 @@ function LatePolls(){
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}
         })
             .then(res=>{
+                console.log(res)
                 setPolls(res.data)
                 setIsLoading(false)
             })
@@ -173,7 +191,6 @@ function LatePolls(){
     }
 
     const onCreate = (values) => {
-      console.log('Received values of form: ', values);
       API.post('/edit/',values)
             .then(res=>(
                 message.success('Изменения сохранены')
@@ -188,34 +205,163 @@ function LatePolls(){
     return(
         <Content>
         <Divider>Архивные опросы</Divider>
-            <Row gutter={[26, 8]}>
-            {polls.map(p=>(
-                <Col>
-                      <Card style={{ width: 350 }}
-                            cover={
-                                <>
-                                    <img alt="example" src={zagl}/>
-                                    <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
-                                    <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
-                                    <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
-                                </>
-                            }
-                            actions={[
-                                <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
-                                <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
-                                <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
+            <Collapse defaultActiveKey={[]} ghost>
+                    <Panel header="Смена 1" key="1">
+                        <Row gutter={[26, 8]}>
+                            {polls[1].length === 0 && <Empty description={'Опросов в этой смене нет'}/>}
+                        {polls[1].map(p=>(
+                            <Col>
+                                  <Card style={{ width: 350 }}
+                                        cover={
+                                            <>
+                                                <img alt="example" src={zagl}/>
+                                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+                                                <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                                <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                            </>
+                                        }
+                                        actions={[
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                            <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
 
 
-                            ]}
-                    >
-                          <Meta title={p.title} description={p.description}/>
-                          <span>Количество баллов: <b>{p.points}</b> </span>
-                          <span>Смена: <b>{p.session}</b> </span>
+                                        ]}
+                                >
+                                      <Meta title={p.title} description={p.description}/>
+                                      <span>Количество баллов: <b>{p.points}</b> </span>
+                                      <span>Смена: <b>{p.session}</b> </span>
 
-                    </Card>
-                </Col>
-            ))}
-            </Row>
+                                </Card>
+                            </Col>
+                        ))}
+                        </Row>
+                    </Panel>
+                    <Panel header="Смена 2" key="2">
+                        <Row gutter={[26, 8]}>
+                            {polls[2].length === 0 && <Empty description={'Опросов в этой смене нет'}/>}
+                        {polls[2].map(p=>(
+                            <Col>
+                                  <Card style={{ width: 350 }}
+                                        cover={
+                                            <>
+                                                <img alt="example" src={zagl}/>
+                                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+                                                <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                                <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                            </>
+                                        }
+                                        actions={[
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                            <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
+
+
+                                        ]}
+                                >
+                                      <Meta title={p.title} description={p.description}/>
+                                      <span>Количество баллов: <b>{p.points}</b> </span>
+                                      <span>Смена: <b>{p.session}</b> </span>
+
+                                </Card>
+                            </Col>
+                        ))}
+                        </Row>
+                    </Panel>
+                    <Panel header="Смена 3" key="3">
+                        <Row gutter={[26, 8]}>
+                            {polls[3].length === 0 && <Empty description={'Опросов в этой смене нет'}/>}
+                        {polls[3].map(p=>(
+                            <Col>
+                                  <Card style={{ width: 350 }}
+                                        cover={
+                                            <>
+                                                <img alt="example" src={zagl}/>
+                                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+                                                <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                                <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                            </>
+                                        }
+                                        actions={[
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                            <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
+
+
+                                        ]}
+                                >
+                                      <Meta title={p.title} description={p.description}/>
+                                      <span>Количество баллов: <b>{p.points}</b> </span>
+                                      <span>Смена: <b>{p.session}</b> </span>
+
+                                </Card>
+                            </Col>
+                        ))}
+                        </Row>
+                    </Panel>
+                    <Panel header="Смена 4" key="4">
+                        <Row gutter={[26, 8]}>
+                            {polls[4].length === 0 && <Empty description={'Опросов в этой смене нет'}/>}
+                        {polls[4].map(p=>(
+                            <Col>
+                                  <Card style={{ width: 350 }}
+                                        cover={
+                                            <>
+                                                <img alt="example" src={zagl}/>
+                                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+                                                <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                                <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                            </>
+                                        }
+                                        actions={[
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                            <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
+
+
+                                        ]}
+                                >
+                                      <Meta title={p.title} description={p.description}/>
+                                      <span>Количество баллов: <b>{p.points}</b> </span>
+                                      <span>Смена: <b>{p.session}</b> </span>
+
+                                </Card>
+                            </Col>
+                        ))}
+                        </Row>
+                    </Panel>
+                    <Panel header="Смена 5" key="5">
+                        <Row gutter={[26, 8]}>
+                            {polls[5].length === 0 && <Empty description={'Опросов в этой смене нет'}/>}
+                        {polls[5].map(p=>(
+                            <Col>
+                                  <Card style={{ width: 350 }}
+                                        cover={
+                                            <>
+                                                <img alt="example" src={zagl}/>
+                                                <Button onClick={() => onClickReport(p.id, 'report', p.num_comp)}>Отчет</Button>
+                                                <Button onClick={() => {setParams(p);setVisible(true);}} icon={<EditOutlined/>}>Изменить</Button>
+                                                <CollectionCreateForm visible={visible} p={params} onCreate={onCreate} onCancel={() => {setVisible(false);}}/>
+                                            </>
+                                        }
+                                        actions={[
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'view')}>Просмотр</Button>,
+                                            <Button type="primary"  ghost onClick={() => onClick(p.id, 'copy',p.num_comp)}>Копировать</Button>,
+                                            <Button onClick={() => onClick(p.id, 'public', p.num_comp)}>Публикация</Button>,
+
+
+                                        ]}
+                                >
+                                      <Meta title={p.title} description={p.description}/>
+                                      <span>Количество баллов: <b>{p.points}</b> </span>
+                                      <span>Смена: <b>{p.session}</b> </span>
+
+                                </Card>
+                            </Col>
+                        ))}
+                        </Row>
+                    </Panel>
+            </Collapse>
             {isModalVisible?<ModalPoll visible={isModalVisible} params={params} onCancel={() => {setIsModalVisible(false);}} />:null}
         </Content>
     )
