@@ -161,13 +161,15 @@ function LatePolls(){
         if(type==='view'){
             setIsModalVisible(true)}
         else {
-            API.post('/move/polls/', {id:id, type:type, comp: comp})
+            API.post('/move/polls/', {id:id, type:type, comp: comp},{timeout: 500})
                 .then(res=>{
                     const link = document.createElement('a');
                     link.href = res.data['link'];
                     link.click();
                 })
-                .catch(error=>{})
+                .catch(error=>{
+                    message.error('Ошибка')
+                })
         }
 
 
