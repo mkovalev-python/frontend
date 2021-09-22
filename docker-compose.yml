@@ -38,7 +38,7 @@ services:
     env_file:
       - ../backend/backend/.env
     volumes:
-      - static_volume:/app/django_static
+      - static_volume: ../backend/django_static
     depends_on:
       - pg_db
       - react-prod
