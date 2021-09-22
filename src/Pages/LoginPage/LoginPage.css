@@ -11,3 +11,9 @@
 .login-form-button {
     width: 100%;
 }
+.button-block{
+    width: 100%;
+    background:rgb(23,79,141);
+    border-color: rgb(23,79,141);
+    color: white;
+}
