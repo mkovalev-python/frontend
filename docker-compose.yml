@@ -2,6 +2,7 @@ version: "3.3"
 
 volumes:
   pg_project1:
+  static_volume: { }
 
 services:
 
