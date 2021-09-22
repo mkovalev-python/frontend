@@ -27,7 +27,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
     - pg_project1:/var/lib/postgresql/data
-  server:
+  django: &django
     restart: always
     container_name: server
     build:
