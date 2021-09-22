@@ -35,11 +35,11 @@ services:
       context: ../backend/
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 8000:80
     env_file:
       - ../backend/backend/.env
     volumes:
-      - static_volume:/app/static
+      - static_volume:/app/django_static
     depends_on:
       - pg_db
       - react-prod
