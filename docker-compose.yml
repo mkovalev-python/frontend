@@ -38,7 +38,6 @@ services:
       - 8000:8000
     env_file:
       - ../backend/backend/.env
-    entrypoint: /app/docker/backend/wsgi-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
     depends_on:
