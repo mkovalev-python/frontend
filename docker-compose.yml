@@ -17,7 +17,7 @@ services:
       - "80:80"
   pg_db:
     container_name: pg_db
-    image: postgres
+    image: postgres:13-alpine3.14
     restart: always
     ports:
       - "5432:5432"
