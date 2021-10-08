@@ -129,33 +129,27 @@ function AnalyticsPage(){
                 setRatingTable(req.data.rating)
                 setLoggerTable(req.data.logger)
                 setUserTable(req.data.user)
-                console.log(req.data)
             })
             .catch(error=>{
-                console.log(error.request)
             })
     },[])
 
     function handleClick(analytics) {
-        console.log(analytics)
         API.get('/get/excel/', {
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
             params: {type: analytics}
         })
             .then(req=>{
-                console.log(req)
                 const link = document.createElement('a');
                 link.href = req.data['url'];
                 link.click();
             })
             .catch(error=>{
-                console.log(error.request)
             })
     }
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
 
     };

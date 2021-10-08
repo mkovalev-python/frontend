@@ -27,7 +27,6 @@ function AnalyticsPage(){
             headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}
         })
             .then(req=>{
-                console.log(req.data)
                 setIsLogData(req.data.logger)
                 setIsUserData(req.data.rating_user)
                 setIsTeamData(req.data.rating_team)
@@ -35,7 +34,6 @@ function AnalyticsPage(){
                 setIsLoading(false)
             })
             .catch(error=>{
-                console.log(error.request)
             })
     },[])
 

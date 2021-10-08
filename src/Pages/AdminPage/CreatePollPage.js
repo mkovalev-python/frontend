@@ -48,7 +48,6 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, category }) => {
             onCreate(values);
           })
           .catch((info) => {
-            console.log('Validate Failed:', info);
           });
       }}
     >
@@ -192,13 +191,11 @@ function CreatePollPage(){
             API.get('get/list/option/', {
         headers: {'Authorization': "JWT " + sessionStorage.getItem('token')}})
                 .then(res =>{
-                    console.log(res)
                     setIsLoading(false)
                     setSession(res.data.session)
 
                 })
                 .catch(error=>{
-                    console.log(error.response)
                 })
         }, [])
 

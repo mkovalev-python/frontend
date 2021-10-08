@@ -79,8 +79,9 @@ function CreateUserPage(){
                     className="logiform"
                   style={{marginTop: 100}} onFinish={onFinish}>
                 <span style={{ color:"red" }}>{error}</span>
-                <Form.Item name="username" label="Логин" rules={[{required: true, message: 'Введите логин пользователя'}]}>
-                    <Input placeholder="Логин" />
+                <Form.Item name="username" label="E-mail" rules={[{required: true, message: 'Пожалуйста, введите электронную почту!'},
+                            {type: 'email', message: 'Некоррекно введен E-mail!',}]}>
+                    <Input placeholder="E-mail" />
                 </Form.Item>
 
                 <Form.Item label="Пароль" name="password" rules={[{ required: true, message: 'Введите пароль' }]}>

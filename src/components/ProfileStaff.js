@@ -24,14 +24,12 @@ function ProfileStaff(){
         headers: {'Authorization': "JWT " + sessionStorage.getItem('token')},
         params: {'permission': sessionStorage.getItem('permission')}})
             .then(res=>{
-                console.log(res.data)
                 setUserInfo(res.data)
                 sessionStorage.setItem('user_id', res.data.user[0].id)
                 setIsLoading(false)
 
             })
             .catch(error=>{
-                console.log(error.response)
             })
     },[])
 
