@@ -14,7 +14,7 @@ services:
       dockerfile:
         Dockerfile
     volumes:
-      - static_volume:/usr/src/app/django/django_static
+      - static_volume:/usr/src/app/django_static
     ports:
       - "80:80"
   pg_db:
@@ -41,7 +41,7 @@ services:
     env_file:
       - ../backend/backend/.env
     volumes:
-      - static_volume:/usr/src/app/django/django_static
+      - static_volume:/usr/src/app/django_static
     depends_on:
       - pg_db
       - react-prod
